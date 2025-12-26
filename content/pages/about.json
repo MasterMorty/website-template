@@ -1,0 +1,62 @@
+{
+  "title": "About Us",
+  "slug": "about",
+  "sections": [
+    {
+      "id": "hero-about",
+      "component": "HeroSection",
+      "props": {
+        "headline": "About Our Company",
+        "subheadline": "We're passionate about building great web experiences",
+        "ctaText": "Contact Us",
+        "ctaLink": "/contact"
+      }
+    },
+    {
+      "id": "text-about-1",
+      "component": "TextBlock",
+      "props": {
+        "title": "Our Story",
+        "content": "<p>Founded in 2025, we set out to revolutionize how businesses manage their web content. Our decoupled CMS approach gives you the best of both worlds: powerful content management with complete website independence.</p><p>We believe that your website should always be online, regardless of what happens to external services. That's why we built a system that syncs content locally while still providing the convenience of a centralized CMS.</p>",
+        "alignment": "left",
+        "maxWidth": "lg"
+      }
+    },
+    {
+      "id": "features-about",
+      "component": "FeatureGrid",
+      "props": {
+        "title": "Our Values",
+        "columns": 4,
+        "features": [
+          {
+            "icon": "💪",
+            "title": "Reliability",
+            "description": "Your site stays up, always"
+          },
+          {
+            "icon": "⚡",
+            "title": "Performance",
+            "description": "Lightning fast load times"
+          },
+          {
+            "icon": "🎯",
+            "title": "Simplicity",
+            "description": "Easy to use and maintain"
+          },
+          {
+            "icon": "🔒",
+            "title": "Security",
+            "description": "Protected and secure"
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "description": "Learn more about our company and what we do",
+    "ogImage": ""
+  },
+  "published": true,
+  "updatedAt": "2025-12-26T00:00:00.000Z"
+}
