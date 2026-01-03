@@ -11,12 +11,6 @@ interface Props {
   title?: string
   
   /** 
-   * @label Content
-   * @type richtext
-   */
-  content: string
-  
-  /** 
    * @label Text Alignment
    * @options left,center,right
    */
@@ -29,7 +23,7 @@ interface Props {
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   title: '',
   alignment: 'left',
   maxWidth: 'lg'
@@ -60,7 +54,9 @@ const maxWidthClasses = {
         <h2 v-if="title" class="text-3xl font-bold mb-6">
           {{ title }}
         </h2>
-        <div class="prose prose-lg" v-html="content" />
+        <div class="prose prose-lg mx-auto">
+          <slot />
+        </div>
       </div>
     </div>
   </section>

@@ -21,13 +21,5 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ['tailwindcss']
     }
-  },
-  eslint: {
-    config: {
-      stylistic: {
-        commaDangle: 'never',
-        braceStyle: '1tbs'
-      }
-    }
   }
 })

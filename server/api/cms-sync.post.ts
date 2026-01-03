@@ -118,22 +118,28 @@ export default defineEventHandler(async (event) => {
 
 // Helper function to update a single page
 async function updatePage(data: any) {
-  const { slug, pageData } = data
+  const { slug, content } = data
   
-  if (!slug || !pageData) {
+  if (!slug || !content) {
     throw createError({
       statusCode: 400,
-      message: 'Missing slug or pageData'
+      message: 'Missing slug or content'
     })
   }
 
-  // Ensure the content/pages directory exists
-  const contentDir = path.join(process.cwd(), 'content', 'pages')
+  // Ensure the content directory exists
+  const contentDir = path.join(process.cwd(), 'content')
   await fs.mkdir(contentDir, { recursive: true })
   
-  // Write the page data to a JSON file
-  const filePath = path.join(contentDir, `${slug}.json`)
-  await fs.writeFile(filePath, JSON.stringify(pageData, null, 2), 'utf-8')
+  // If content is already a markdown string (from TipTap), use it directly
+  // Otherwise if it's a string, assume it's markdown
+  const markdownContent = typeof content === 'string' 
+    ? content 
+    : JSON.stringify(content, null, 2) // Fallback if someone sends JSON
+  
+  // Write the markdown directly to a .md file
+  const filePath = path.join(contentDir, `${slug}.md`)
+  await fs.writeFile(filePath, markdownContent, 'utf-8')
   
   console.log(`Updated page: ${slug}`)
 }
@@ -149,7 +155,7 @@ async function deletePage(data: any) {
     })
   }
 
-  const filePath = path.join(process.cwd(), 'content', 'pages', `${slug}.json`)
+  const filePath = path.join(process.cwd(), 'content', `${slug}.md`)
   
   try {
     await fs.unlink(filePath)

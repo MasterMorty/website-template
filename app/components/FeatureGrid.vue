@@ -37,7 +37,7 @@ interface Props {
   columns?: 2 | 3 | 4
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   title: '',
   subtitle: '',
   columns: 3
@@ -51,7 +51,7 @@ const columnClasses = {
 </script>
 
 <template>
-  <section class="py-16 bg-gray-50">
+  <section class="py-16">
     <div class="container mx-auto px-4">
       <div v-if="title" class="text-center mb-12">
         <h2 class="text-4xl font-bold mb-4">{{ title }}</h2>
