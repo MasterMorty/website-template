@@ -1,6 +1,5 @@
 import { sqliteTable, text, int, index, unique } from "drizzle-orm/sqlite-core";
-import { organization } from "./organization";
-import { user } from "./auth";
+import { user, organization } from "./auth";
 import { uuidv7 } from "uuidv7"
 
 export const project = sqliteTable("project", {
