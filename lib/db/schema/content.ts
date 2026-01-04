@@ -1,24 +1,22 @@
 import { sqliteTable, text, int, index, unique } from "drizzle-orm/sqlite-core";
-import { projects } from "./projects";
-import { content_types } from "./content_types";
-import { users } from "./users";
+import { project } from "./project";
+import { content_type } from "./content_type";
+import { user } from "./auth";
 import { uuidv7 } from "uuidv7"
 
-export const content = sqliteTable(
-  "content",
-  {
-    id: text("id").primaryKey().$default(() => uuidv7()),
-    project_id: text("project_id").notNull().references(() => projects.id, { onDelete: "cascade" }),
-    content_type_id: text("content_type_id").notNull().references(() => content_types.id, { onDelete: "cascade" }),
-    title: text("title").notNull(),
-    slug: text("slug").notNull(),
-    data: text("data", { mode: "json" }).notNull(), // Flexible JSON content
-    status: text("status").default("draft").notNull(), // draft, published, archived
-    created_by_id: text("created_by_id").notNull().references(() => users.id, { onDelete: "set null" }),
-    updated_by_id: text("updated_by_id").references(() => users.id, { onDelete: "set null" }),
-    published_at: int("published_at"),
-    created_at: int("created_at").notNull().$default(() => Date.now()),
-    updated_at: int("updated_at").notNull().$default(() => Date.now()).$onUpdate(() => Date.now()),
+export const content = sqliteTable("content", {
+    id: text().primaryKey().$default(() => uuidv7()),
+    project_id: text().notNull().references(() => project.id, { onDelete: "cascade" }),
+    content_type_id: text().notNull().references(() => content_type.id, { onDelete: "cascade" }),
+    title: text().notNull(),
+    slug: text().notNull(),
+    data: text({ mode: "json" }).notNull(), // Flexible JSON content
+    status: text().default("draft").notNull(), // draft, published, archived
+    created_by_id: text().notNull().references(() => user.id, { onDelete: "set null" }),
+    updated_by_id: text().references(() => user.id, { onDelete: "set null" }),
+    published_at: int(),
+    created_at: int().notNull().$default(() => Date.now()),
+    updated_at: int().notNull().$default(() => Date.now()).$onUpdate(() => Date.now()),
   },
   (table) => [
     unique("content_project_slug_unique").on(table.project_id, table.slug),

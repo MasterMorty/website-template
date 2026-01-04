@@ -1,11 +1,11 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "19ef53e5-1e80-4172-a2f1-38d37d8b5520",
+  "id": "1cb1e651-ac6a-472e-b518-6619d6eb23f3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "organizations": {
-      "name": "organizations",
+    "organization": {
+      "name": "organization",
       "columns": {
         "id": {
           "name": "id",
@@ -81,8 +81,8 @@
         }
       },
       "indexes": {
-        "organizations_slug_unique": {
-          "name": "organizations_slug_unique",
+        "organization_slug_unique": {
+          "name": "organization_slug_unique",
           "columns": [
             "slug"
           ],
@@ -108,8 +108,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "users": {
-      "name": "users",
+    "account": {
+      "name": "account",
       "columns": {
         "id": {
           "name": "id",
@@ -118,56 +118,75 @@
           "notNull": true,
           "autoincrement": false
         },
-        "org_id": {
-          "name": "org_id",
+        "account_id": {
+          "name": "account_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "email": {
-          "name": "email",
+        "provider_id": {
+          "name": "provider_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "name": {
-          "name": "name",
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "access_token": {
+          "name": "access_token",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "password_hash": {
-          "name": "password_hash",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "avatar_url": {
-          "name": "avatar_url",
+        "refresh_token": {
+          "name": "refresh_token",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "is_owner": {
-          "name": "is_owner",
+        "id_token": {
+          "name": "id_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "access_token_expires_at": {
+          "name": "access_token_expires_at",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": false
+          "notNull": false,
+          "autoincrement": false
         },
-        "status": {
-          "name": "status",
+        "refresh_token_expires_at": {
+          "name": "refresh_token_expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "scope": {
+          "name": "scope",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "'active'"
+          "notNull": false,
+          "autoincrement": false
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
@@ -185,17 +204,209 @@
         }
       },
       "indexes": {
+        "account_user_id_idx": {
+          "name": "account_user_id_idx",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "account_user_id_user_id_fk": {
+          "name": "account_user_id_user_id_fk",
+          "tableFrom": "account",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "session": {
+      "name": "session",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ip_address": {
+          "name": "ip_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "user_agent": {
+          "name": "user_agent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "session_token_unique": {
+          "name": "session_token_unique",
+          "columns": [
+            "token"
+          ],
+          "isUnique": true
+        },
+        "session_user_id_idx": {
+          "name": "session_user_id_idx",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "session_user_id_user_id_fk": {
+          "name": "session_user_id_user_id_fk",
+          "tableFrom": "session",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "user": {
+      "name": "user",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "org_id": {
+          "name": "org_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email_verified": {
+          "name": "email_verified",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'active'"
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
+        },
         "user_org_idx": {
           "name": "user_org_idx",
           "columns": [
             "org_id"
-          ],
-          "isUnique": false
-        },
-        "user_email_idx": {
-          "name": "user_email_idx",
-          "columns": [
-            "email"
           ],
           "isUnique": false
         },
@@ -209,10 +420,10 @@
         }
       },
       "foreignKeys": {
-        "users_org_id_organizations_id_fk": {
-          "name": "users_org_id_organizations_id_fk",
-          "tableFrom": "users",
-          "tableTo": "organizations",
+        "user_org_id_organization_id_fk": {
+          "name": "user_org_id_organization_id_fk",
+          "tableFrom": "user",
+          "tableTo": "organization",
           "columnsFrom": [
             "org_id"
           ],
@@ -223,6 +434,66 @@
           "onUpdate": "no action"
         }
       },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "verification": {
+      "name": "verification",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "value": {
+          "name": "value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "verification_identifier_idx": {
+          "name": "verification_identifier_idx",
+          "columns": [
+            "identifier"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -292,10 +563,10 @@
         }
       },
       "foreignKeys": {
-        "roles_org_id_organizations_id_fk": {
-          "name": "roles_org_id_organizations_id_fk",
+        "roles_org_id_organization_id_fk": {
+          "name": "roles_org_id_organization_id_fk",
           "tableFrom": "roles",
-          "tableTo": "organizations",
+          "tableTo": "organization",
           "columnsFrom": [
             "org_id"
           ],
@@ -310,8 +581,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "permissions": {
-      "name": "permissions",
+    "permission": {
+      "name": "permission",
       "columns": {
         "id": {
           "name": "id",
@@ -368,9 +639,9 @@
         }
       },
       "foreignKeys": {
-        "permissions_role_id_roles_id_fk": {
-          "name": "permissions_role_id_roles_id_fk",
-          "tableFrom": "permissions",
+        "permission_role_id_roles_id_fk": {
+          "name": "permission_role_id_roles_id_fk",
+          "tableFrom": "permission",
           "tableTo": "roles",
           "columnsFrom": [
             "role_id"
@@ -386,8 +657,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "user_roles": {
-      "name": "user_roles",
+    "user_role": {
+      "name": "user_role",
       "columns": {
         "user_id": {
           "name": "user_id",
@@ -421,10 +692,10 @@
         }
       },
       "foreignKeys": {
-        "user_roles_user_id_users_id_fk": {
-          "name": "user_roles_user_id_users_id_fk",
-          "tableFrom": "user_roles",
-          "tableTo": "users",
+        "user_role_user_id_user_id_fk": {
+          "name": "user_role_user_id_user_id_fk",
+          "tableFrom": "user_role",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
@@ -434,9 +705,9 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "user_roles_role_id_roles_id_fk": {
-          "name": "user_roles_role_id_roles_id_fk",
-          "tableFrom": "user_roles",
+        "user_role_role_id_roles_id_fk": {
+          "name": "user_role_role_id_roles_id_fk",
+          "tableFrom": "user_role",
           "tableTo": "roles",
           "columnsFrom": [
             "role_id"
@@ -449,19 +720,19 @@
         }
       },
       "compositePrimaryKeys": {
-        "user_roles_user_id_role_id_pk": {
+        "user_role_user_id_role_id_pk": {
           "columns": [
             "user_id",
             "role_id"
           ],
-          "name": "user_roles_user_id_role_id_pk"
+          "name": "user_role_user_id_role_id_pk"
         }
       },
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "projects": {
-      "name": "projects",
+    "project": {
+      "name": "project",
       "columns": {
         "id": {
           "name": "id",
@@ -550,15 +821,15 @@
         }
       },
       "indexes": {
-        "projects_public_api_key_unique": {
-          "name": "projects_public_api_key_unique",
+        "project_public_api_key_unique": {
+          "name": "project_public_api_key_unique",
           "columns": [
             "public_api_key"
           ],
           "isUnique": true
         },
-        "projects_domain_unique": {
-          "name": "projects_domain_unique",
+        "project_domain_unique": {
+          "name": "project_domain_unique",
           "columns": [
             "domain"
           ],
@@ -588,10 +859,10 @@
         }
       },
       "foreignKeys": {
-        "projects_org_id_organizations_id_fk": {
-          "name": "projects_org_id_organizations_id_fk",
-          "tableFrom": "projects",
-          "tableTo": "organizations",
+        "project_org_id_organization_id_fk": {
+          "name": "project_org_id_organization_id_fk",
+          "tableFrom": "project",
+          "tableTo": "organization",
           "columnsFrom": [
             "org_id"
           ],
@@ -601,10 +872,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "projects_created_by_id_users_id_fk": {
-          "name": "projects_created_by_id_users_id_fk",
-          "tableFrom": "projects",
-          "tableTo": "users",
+        "project_created_by_id_user_id_fk": {
+          "name": "project_created_by_id_user_id_fk",
+          "tableFrom": "project",
+          "tableTo": "user",
           "columnsFrom": [
             "created_by_id"
           ],
@@ -619,8 +890,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "project_members": {
-      "name": "project_members",
+    "project_member": {
+      "name": "project_member",
       "columns": {
         "id": {
           "name": "id",
@@ -683,10 +954,10 @@
         }
       },
       "foreignKeys": {
-        "project_members_project_id_projects_id_fk": {
-          "name": "project_members_project_id_projects_id_fk",
-          "tableFrom": "project_members",
-          "tableTo": "projects",
+        "project_member_project_id_project_id_fk": {
+          "name": "project_member_project_id_project_id_fk",
+          "tableFrom": "project_member",
+          "tableTo": "project",
           "columnsFrom": [
             "project_id"
           ],
@@ -696,10 +967,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "project_members_user_id_users_id_fk": {
-          "name": "project_members_user_id_users_id_fk",
-          "tableFrom": "project_members",
-          "tableTo": "users",
+        "project_member_user_id_user_id_fk": {
+          "name": "project_member_user_id_user_id_fk",
+          "tableFrom": "project_member",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
@@ -709,9 +980,9 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "project_members_role_id_roles_id_fk": {
-          "name": "project_members_role_id_roles_id_fk",
-          "tableFrom": "project_members",
+        "project_member_role_id_roles_id_fk": {
+          "name": "project_member_role_id_roles_id_fk",
+          "tableFrom": "project_member",
           "tableTo": "roles",
           "columnsFrom": [
             "role_id"
@@ -727,8 +998,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "content_types": {
-      "name": "content_types",
+    "content_type": {
+      "name": "content_type",
       "columns": {
         "id": {
           "name": "id",
@@ -798,10 +1069,10 @@
         }
       },
       "foreignKeys": {
-        "content_types_project_id_projects_id_fk": {
-          "name": "content_types_project_id_projects_id_fk",
-          "tableFrom": "content_types",
-          "tableTo": "projects",
+        "content_type_project_id_project_id_fk": {
+          "name": "content_type_project_id_project_id_fk",
+          "tableFrom": "content_type",
+          "tableTo": "project",
           "columnsFrom": [
             "project_id"
           ],
@@ -937,10 +1208,10 @@
         }
       },
       "foreignKeys": {
-        "content_project_id_projects_id_fk": {
-          "name": "content_project_id_projects_id_fk",
+        "content_project_id_project_id_fk": {
+          "name": "content_project_id_project_id_fk",
           "tableFrom": "content",
-          "tableTo": "projects",
+          "tableTo": "project",
           "columnsFrom": [
             "project_id"
           ],
@@ -950,10 +1221,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "content_content_type_id_content_types_id_fk": {
-          "name": "content_content_type_id_content_types_id_fk",
+        "content_content_type_id_content_type_id_fk": {
+          "name": "content_content_type_id_content_type_id_fk",
           "tableFrom": "content",
-          "tableTo": "content_types",
+          "tableTo": "content_type",
           "columnsFrom": [
             "content_type_id"
           ],
@@ -963,10 +1234,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "content_created_by_id_users_id_fk": {
-          "name": "content_created_by_id_users_id_fk",
+        "content_created_by_id_user_id_fk": {
+          "name": "content_created_by_id_user_id_fk",
           "tableFrom": "content",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "created_by_id"
           ],
@@ -976,10 +1247,10 @@
           "onDelete": "set null",
           "onUpdate": "no action"
         },
-        "content_updated_by_id_users_id_fk": {
-          "name": "content_updated_by_id_users_id_fk",
+        "content_updated_by_id_user_id_fk": {
+          "name": "content_updated_by_id_user_id_fk",
           "tableFrom": "content",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "updated_by_id"
           ],
@@ -1078,7 +1349,7 @@
           "name": "alt_text",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "uploaded_by_id": {
@@ -1106,10 +1377,10 @@
         }
       },
       "foreignKeys": {
-        "media_project_id_projects_id_fk": {
-          "name": "media_project_id_projects_id_fk",
+        "media_project_id_project_id_fk": {
+          "name": "media_project_id_project_id_fk",
           "tableFrom": "media",
-          "tableTo": "projects",
+          "tableTo": "project",
           "columnsFrom": [
             "project_id"
           ],
@@ -1119,10 +1390,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "media_uploaded_by_id_users_id_fk": {
-          "name": "media_uploaded_by_id_users_id_fk",
+        "media_uploaded_by_id_user_id_fk": {
+          "name": "media_uploaded_by_id_user_id_fk",
           "tableFrom": "media",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "uploaded_by_id"
           ],
@@ -1137,8 +1408,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "api_tokens": {
-      "name": "api_tokens",
+    "api_token": {
+      "name": "api_token",
       "columns": {
         "id": {
           "name": "id",
@@ -1198,8 +1469,8 @@
         }
       },
       "indexes": {
-        "api_tokens_token_hash_unique": {
-          "name": "api_tokens_token_hash_unique",
+        "api_token_token_hash_unique": {
+          "name": "api_token_token_hash_unique",
           "columns": [
             "token_hash"
           ],
@@ -1214,10 +1485,10 @@
         }
       },
       "foreignKeys": {
-        "api_tokens_project_id_projects_id_fk": {
-          "name": "api_tokens_project_id_projects_id_fk",
-          "tableFrom": "api_tokens",
-          "tableTo": "projects",
+        "api_token_project_id_project_id_fk": {
+          "name": "api_token_project_id_project_id_fk",
+          "tableFrom": "api_token",
+          "tableTo": "project",
           "columnsFrom": [
             "project_id"
           ],
