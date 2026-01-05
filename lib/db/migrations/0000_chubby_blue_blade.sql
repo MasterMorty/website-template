@@ -1,19 +1,3 @@
-CREATE TABLE `organization` (
-	`id` text PRIMARY KEY NOT NULL,
-	`name` text NOT NULL,
-	`slug` text NOT NULL,
-	`description` text,
-	`logo_url` text,
-	`plan` text DEFAULT 'basic' NOT NULL,
-	`status` text DEFAULT 'active' NOT NULL,
-	`stripe_customer_id` text,
-	`created_at` integer NOT NULL,
-	`updated_at` integer NOT NULL
-);
---> statement-breakpoint
-CREATE UNIQUE INDEX `organization_slug_unique` ON `organization` (`slug`);--> statement-breakpoint
-CREATE INDEX `org_slug_idx` ON `organization` (`slug`);--> statement-breakpoint
-CREATE INDEX `org_status_idx` ON `organization` (`status`);--> statement-breakpoint
 CREATE TABLE `account` (
 	`id` text PRIMARY KEY NOT NULL,
 	`account_id` text NOT NULL,
@@ -31,7 +15,72 @@ CREATE TABLE `account` (
 	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
-CREATE INDEX `account_user_id_idx` ON `account` (`user_id`);--> statement-breakpoint
+CREATE INDEX `account_userId_idx` ON `account` (`user_id`);--> statement-breakpoint
+CREATE TABLE `apikey` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text,
+	`start` text,
+	`prefix` text,
+	`key` text NOT NULL,
+	`user_id` text NOT NULL,
+	`refill_interval` integer,
+	`refill_amount` integer,
+	`last_refill_at` integer,
+	`enabled` integer DEFAULT true,
+	`rate_limit_enabled` integer DEFAULT true,
+	`rate_limit_time_window` integer DEFAULT 86400000,
+	`rate_limit_max` integer DEFAULT 10,
+	`request_count` integer DEFAULT 0,
+	`remaining` integer,
+	`last_request` integer,
+	`expires_at` integer,
+	`created_at` integer NOT NULL,
+	`updated_at` integer NOT NULL,
+	`permissions` text,
+	`metadata` text,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
+CREATE INDEX `apikey_key_idx` ON `apikey` (`key`);--> statement-breakpoint
+CREATE INDEX `apikey_userId_idx` ON `apikey` (`user_id`);--> statement-breakpoint
+CREATE TABLE `invitation` (
+	`id` text PRIMARY KEY NOT NULL,
+	`organization_id` text NOT NULL,
+	`email` text NOT NULL,
+	`role` text,
+	`status` text DEFAULT 'pending' NOT NULL,
+	`expires_at` integer NOT NULL,
+	`created_at` integer NOT NULL,
+	`inviter_id` text NOT NULL,
+	FOREIGN KEY (`organization_id`) REFERENCES `organization`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`inviter_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
+CREATE INDEX `invitation_organizationId_idx` ON `invitation` (`organization_id`);--> statement-breakpoint
+CREATE INDEX `invitation_email_idx` ON `invitation` (`email`);--> statement-breakpoint
+CREATE TABLE `member` (
+	`id` text PRIMARY KEY NOT NULL,
+	`organization_id` text NOT NULL,
+	`user_id` text NOT NULL,
+	`role` text DEFAULT 'member' NOT NULL,
+	`created_at` integer NOT NULL,
+	FOREIGN KEY (`organization_id`) REFERENCES `organization`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
+CREATE INDEX `member_organizationId_idx` ON `member` (`organization_id`);--> statement-breakpoint
+CREATE INDEX `member_userId_idx` ON `member` (`user_id`);--> statement-breakpoint
+CREATE TABLE `organization` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`slug` text NOT NULL,
+	`logo` text,
+	`created_at` integer NOT NULL,
+	`metadata` text
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `organization_slug_unique` ON `organization` (`slug`);--> statement-breakpoint
+CREATE UNIQUE INDEX `organization_slug_uidx` ON `organization` (`slug`);--> statement-breakpoint
 CREATE TABLE `session` (
 	`id` text PRIMARY KEY NOT NULL,
 	`expires_at` integer NOT NULL,
@@ -41,27 +90,29 @@ CREATE TABLE `session` (
 	`ip_address` text,
 	`user_agent` text,
 	`user_id` text NOT NULL,
+	`impersonated_by` text,
+	`active_organization_id` text,
 	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `session_token_unique` ON `session` (`token`);--> statement-breakpoint
-CREATE INDEX `session_user_id_idx` ON `session` (`user_id`);--> statement-breakpoint
+CREATE INDEX `session_userId_idx` ON `session` (`user_id`);--> statement-breakpoint
 CREATE TABLE `user` (
 	`id` text PRIMARY KEY NOT NULL,
-	`org_id` text NOT NULL,
 	`name` text NOT NULL,
 	`email` text NOT NULL,
 	`email_verified` integer DEFAULT false NOT NULL,
-	`status` text DEFAULT 'active' NOT NULL,
 	`image` text,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL,
-	FOREIGN KEY (`org_id`) REFERENCES `organization`(`id`) ON UPDATE no action ON DELETE cascade
+	`role` text,
+	`banned` integer DEFAULT false,
+	`ban_reason` text,
+	`ban_expires` integer,
+	`org_id` text NOT NULL
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `user_email_unique` ON `user` (`email`);--> statement-breakpoint
-CREATE INDEX `user_org_idx` ON `user` (`org_id`);--> statement-breakpoint
-CREATE UNIQUE INDEX `user_org_email_unique` ON `user` (`org_id`,`email`);--> statement-breakpoint
 CREATE TABLE `verification` (
 	`id` text PRIMARY KEY NOT NULL,
 	`identifier` text NOT NULL,
@@ -72,39 +123,6 @@ CREATE TABLE `verification` (
 );
 --> statement-breakpoint
 CREATE INDEX `verification_identifier_idx` ON `verification` (`identifier`);--> statement-breakpoint
-CREATE TABLE `roles` (
-	`id` text PRIMARY KEY NOT NULL,
-	`org_id` text NOT NULL,
-	`name` text NOT NULL,
-	`description` text,
-	`is_system` integer DEFAULT false NOT NULL,
-	`created_at` integer NOT NULL,
-	FOREIGN KEY (`org_id`) REFERENCES `organization`(`id`) ON UPDATE no action ON DELETE cascade
-);
---> statement-breakpoint
-CREATE INDEX `role_org_idx` ON `roles` (`org_id`);--> statement-breakpoint
-CREATE UNIQUE INDEX `role_org_name_unique` ON `roles` (`org_id`,`name`);--> statement-breakpoint
-CREATE TABLE `permission` (
-	`id` text PRIMARY KEY NOT NULL,
-	`role_id` text NOT NULL,
-	`resource` text NOT NULL,
-	`action` text NOT NULL,
-	`created_at` integer NOT NULL,
-	FOREIGN KEY (`role_id`) REFERENCES `roles`(`id`) ON UPDATE no action ON DELETE cascade
-);
---> statement-breakpoint
-CREATE INDEX `perm_role_idx` ON `permission` (`role_id`);--> statement-breakpoint
-CREATE UNIQUE INDEX `perm_role_resource_action_unique` ON `permission` (`role_id`,`resource`,`action`);--> statement-breakpoint
-CREATE TABLE `user_role` (
-	`user_id` text NOT NULL,
-	`role_id` text NOT NULL,
-	PRIMARY KEY(`user_id`, `role_id`),
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade,
-	FOREIGN KEY (`role_id`) REFERENCES `roles`(`id`) ON UPDATE no action ON DELETE cascade
-);
---> statement-breakpoint
-CREATE INDEX `user_role_user_idx` ON `user_role` (`user_id`);--> statement-breakpoint
-CREATE INDEX `user_role_role_idx` ON `user_role` (`role_id`);--> statement-breakpoint
 CREATE TABLE `project` (
 	`id` text PRIMARY KEY NOT NULL,
 	`org_id` text NOT NULL,
@@ -127,20 +145,6 @@ CREATE UNIQUE INDEX `project_domain_unique` ON `project` (`domain`);--> statemen
 CREATE INDEX `project_org_idx` ON `project` (`org_id`);--> statement-breakpoint
 CREATE INDEX `project_status_idx` ON `project` (`status`);--> statement-breakpoint
 CREATE UNIQUE INDEX `project_org_slug_unique` ON `project` (`org_id`,`slug`);--> statement-breakpoint
-CREATE TABLE `project_member` (
-	`id` text PRIMARY KEY NOT NULL,
-	`project_id` text NOT NULL,
-	`user_id` text NOT NULL,
-	`role_id` text NOT NULL,
-	`added_at` integer NOT NULL,
-	FOREIGN KEY (`project_id`) REFERENCES `project`(`id`) ON UPDATE no action ON DELETE cascade,
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade,
-	FOREIGN KEY (`role_id`) REFERENCES `roles`(`id`) ON UPDATE no action ON DELETE restrict
-);
---> statement-breakpoint
-CREATE INDEX `proj_member_project_idx` ON `project_member` (`project_id`);--> statement-breakpoint
-CREATE INDEX `proj_member_user_idx` ON `project_member` (`user_id`);--> statement-breakpoint
-CREATE UNIQUE INDEX `proj_member_project_user_unique` ON `project_member` (`project_id`,`user_id`);--> statement-breakpoint
 CREATE TABLE `content_type` (
 	`id` text PRIMARY KEY NOT NULL,
 	`project_id` text NOT NULL,
@@ -196,18 +200,4 @@ CREATE TABLE `media` (
 	FOREIGN KEY (`uploaded_by_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE set null
 );
 --> statement-breakpoint
-CREATE INDEX `media_project_idx` ON `media` (`project_id`);--> statement-breakpoint
-CREATE TABLE `api_token` (
-	`id` text PRIMARY KEY NOT NULL,
-	`project_id` text NOT NULL,
-	`name` text NOT NULL,
-	`token_hash` text NOT NULL,
-	`scopes` text NOT NULL,
-	`last_used_at` integer,
-	`expires_at` integer,
-	`created_at` integer NOT NULL,
-	FOREIGN KEY (`project_id`) REFERENCES `project`(`id`) ON UPDATE no action ON DELETE cascade
-);
---> statement-breakpoint
-CREATE UNIQUE INDEX `api_token_token_hash_unique` ON `api_token` (`token_hash`);--> statement-breakpoint
-CREATE INDEX `api_token_project_idx` ON `api_token` (`project_id`);
+CREATE INDEX `media_project_idx` ON `media` (`project_id`);

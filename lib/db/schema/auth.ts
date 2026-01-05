@@ -6,139 +6,153 @@ import {
   index,
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
-import { uuidv7 } from "uuidv7"
-
+import { uuidv7 } from "uuidv7";
 
 export const user = sqliteTable("user", {
   id: text().primaryKey().$default(() => uuidv7()),
-  name: text().notNull(),
-  email: text().notNull().unique(),
-  email_verified: int({ mode: "boolean" }).default(false).notNull(),
-  image: text(),
-  created_at: int().$default(() => Date.now()).notNull(),
-  updated_at: int().$default(() => Date.now()).$onUpdate(() => Date.now()).notNull(),
-  role: text(),
-  banned: int({ mode: "boolean" }).default(false),
-  banReason: text(),
-  banExpires: int(),
-  org_id: text().notNull(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: int("email_verified", { mode: "boolean" }).default(false).notNull(),
+  image: text("image"),
+  createdAt: int("created_at").$default(() => Date.now()).notNull(),
+  updatedAt: int("updated_at").$default(() => Date.now()).$onUpdate(() => /* @__PURE__ */ Date.now()).notNull(),
+  role: text("role"),
+  banned: int("banned", { mode: "boolean" }).default(false),
+  banReason: text("ban_reason"),
+  banExpires: int("ban_expires"),
+  org_id: text("org_id").$default(() => uuidv7()).notNull(),
 });
 
-export const session = sqliteTable("session", {
+export const session = sqliteTable(
+"session",
+  {
     id: text().primaryKey().$default(() => uuidv7()),
-    expires_at: int().notNull(),
-    token: text().notNull().unique(),
-    created_at: int().$default(() => Date.now()).notNull(),
-    updated_at: int().$onUpdate(() => Date.now()).notNull(),
-    ip_address: text(),
-    user_agent: text(),
-    user_id: text().notNull().references(() => user.id, { onDelete: "cascade" }),
-    impersonated_by: text(),
-    active_organization_id: text(),
+    expiresAt: int("expires_at").notNull(),
+    token: text("token").notNull().unique(),
+    createdAt: int("created_at").$default(() => Date.now()).notNull(),
+    updatedAt: int("updated_at").$default(() => Date.now()).$onUpdate(() => /* @__PURE__ */ Date.now()).notNull(),
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+    impersonatedBy: text("impersonated_by"),
+    activeOrganizationId: text("active_organization_id"),
   },
-  (table) => [index("session_userId_idx").on(table.user_id)],
+  (table) => [index("session_userId_idx").on(table.userId)],
 );
 
-export const account = sqliteTable("account", {
+export const account = sqliteTable(
+  "account",
+  {
     id: text().primaryKey().$default(() => uuidv7()),
-    account_id: text().notNull(),
-    provider_id: text().notNull(),
-    user_id: text().notNull().references(() => user.id, { onDelete: "cascade" }),
-    access_token: text(),
-    refresh_token: text(),
-    id_token: text(),
-    access_token_expires_at: int(),
-    refresh_token_expires_at: int(),
-    scope: text(),
-    password: text(),
-    created_at: int().$default(() => Date.now()).notNull(),
-    updated_at: int().$onUpdate(() => Date.now()).notNull(),
+    accountId: text("account_id").notNull(),
+    providerId: text("provider_id").notNull(),
+    userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+    accessToken: text("access_token"),
+    refreshToken: text("refresh_token"),
+    idToken: text("id_token"),
+    accessTokenExpiresAt: int("access_token_expires_at"),
+    refreshTokenExpiresAt: int("refresh_token_expires_at"),
+    scope: text("scope"),
+    password: text("password"),
+    createdAt: int("created_at").$default(() => Date.now()).notNull(),
+    updatedAt: int("updated_at").$default(() => Date.now()).$onUpdate(() => /* @__PURE__ */ Date.now()).notNull(),
   },
-  (table) => [index("account_userId_idx").on(table.user_id)],
+  (table) => [index("account_userId_idx").on(table.userId)],
 );
 
-export const verification = sqliteTable("verification", {
+export const verification = sqliteTable(
+  "verification",
+  {
     id: text().primaryKey().$default(() => uuidv7()),
-    identifier: text().notNull(),
-    value: text().notNull(),
-    expires_at: int().notNull(),
-    created_at: int().$default(() => Date.now()).notNull(),
-    updated_at: int().$default(() => Date.now()).$onUpdate(() => Date.now()).notNull(),
+    identifier: text("identifier").notNull(),
+    value: text("value").notNull(),
+    expiresAt: int("expires_at").notNull(),
+    createdAt: int("created_at").$default(() => Date.now()).notNull(),
+    updatedAt: int("updated_at").$default(() => Date.now()).$onUpdate(() => /* @__PURE__ */ Date.now()).notNull(),
   },
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
-export const apikey = sqliteTable("apikey", {
+export const apikey = sqliteTable(
+  "apikey",
+  {
     id: text().primaryKey().$default(() => uuidv7()),
-    name: text(),
-    start: text(),
-    prefix: text(),
-    key: text().notNull(),
-    user_id: text().notNull().references(() => user.id, { onDelete: "cascade" }),
-    refill_interval: int(),
-    refill_amount: int(),
-    last_refill_at: int(),
-    enabled: int({ mode: "boolean" }).default(true),
-    rate_limit_enabled: int({ mode: "boolean",}).default(true),
-    rate_limit_time_window: int().default(86400000),
-    rate_limit_max: int().default(10),
-    request_count: int().default(0),
-    remaining: int(),
-    last_request: int(),
-    expires_at: int(),
-    created_at: int().notNull(),
-    updated_at: int().notNull(),
-    permissions: text(),
-    metadata: text(),
+    name: text("name"),
+    start: text("start"),
+    prefix: text("prefix"),
+    key: text("key").notNull(),
+    userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+    refillInterval: int("refill_interval"),
+    refillAmount: int("refill_amount"),
+    lastRefillAt: int("last_refill_at"),
+    enabled: int("enabled", { mode: "boolean" }).default(true),
+    rateLimitEnabled: int("rate_limit_enabled", {
+      mode: "boolean",
+    }).default(true),
+    rateLimitTimeWindow: int("rate_limit_time_window").default(86400000),
+    rateLimitMax: int("rate_limit_max").default(10),
+    requestCount: int("request_count").default(0),
+    remaining: int("remaining"),
+    lastRequest: int("last_request"),
+    expiresAt: int("expires_at"),
+    createdAt: int("created_at").notNull(),
+    updatedAt: int("updated_at").notNull(),
+    permissions: text("permissions"),
+    metadata: text("metadata"),
   },
   (table) => [
     index("apikey_key_idx").on(table.key),
-    index("apikey_user_id_idx").on(table.user_id),
+    index("apikey_userId_idx").on(table.userId),
   ],
 );
 
-export const organization = sqliteTable("organization", {
+export const organization = sqliteTable(
+  "organization",
+  {
     id: text().primaryKey().$default(() => uuidv7()),
-    name: text().notNull(),
-    slug: text().notNull().unique(),
-    logo_url: text(),
-    plan: text().default("basic").notNull(),
-    created_at: int().notNull(),
-    metadata: text(),
+    name: text("name").notNull(),
+    slug: text("slug").notNull().unique(),
+    logo: text("logo"),
+    createdAt: int("created_at").notNull(),
+    metadata: text("metadata"),
   },
   (table) => [uniqueIndex("organization_slug_uidx").on(table.slug)],
 );
 
-export const member = sqliteTable("member", {
+export const member = sqliteTable(
+  "member",
+  {
     id: text().primaryKey().$default(() => uuidv7()),
-    organization_id: text().notNull().references(() => organization.id, { onDelete: "cascade" }),
-    user_id: text().notNull().references(() => user.id, { onDelete: "cascade" }),
-    role: text().default("member").notNull(),
-    created_at: int().notNull(),
+    organizationId: text("organization_id").notNull().references(() => organization.id, { onDelete: "cascade" }),
+    userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+    role: text("role").default("member").notNull(),
+    createdAt: int("created_at").notNull(),
   },
   (table) => [
-    index("member_organization_id_idx").on(table.organization_id),
-    index("member_user_id_idx").on(table.user_id),
+    index("member_organizationId_idx").on(table.organizationId),
+    index("member_userId_idx").on(table.userId),
   ],
 );
 
-export const invitation = sqliteTable("invitation", {
+export const invitation = sqliteTable(
+  "invitation",
+  {
     id: text().primaryKey().$default(() => uuidv7()),
-    organization_id: text().notNull().references(() => organization.id, { onDelete: "cascade" }),
-    email: text().notNull(),
-    role: text(),
-    status: text().default("pending").notNull(),
-    expires_at: int().notNull(),
-    created_at: int().$default(() => Date.now()).notNull(),
-    inviter_id: text().notNull().references(() => user.id, { onDelete: "cascade" }),
+    organizationId: text("organization_id").notNull().references(() => organization.id, { onDelete: "cascade" }),
+    email: text("email").notNull(),
+    role: text("role"),
+    status: text("status").default("pending").notNull(),
+    expiresAt: int("expires_at").notNull(),
+    createdAt: int("created_at").$default(() => Date.now()).notNull(),
+    inviterId: text("inviter_id").notNull().references(() => user.id, { onDelete: "cascade" }),
   },
   (table) => [
-    index("invitation_organization_id_idx").on(table.organization_id),
+    index("invitation_organizationId_idx").on(table.organizationId),
     index("invitation_email_idx").on(table.email),
   ],
 );
 
-export const user_relations = relations(user, ({ many }) => ({
+export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   apikeys: many(apikey),
@@ -146,50 +160,50 @@ export const user_relations = relations(user, ({ many }) => ({
   invitations: many(invitation),
 }));
 
-export const session_relations = relations(session, ({ one }) => ({
+export const sessionRelations = relations(session, ({ one }) => ({
   user: one(user, {
-    fields: [session.user_id],
+    fields: [session.userId],
     references: [user.id],
   }),
 }));
 
-export const account_relations = relations(account, ({ one }) => ({
+export const accountRelations = relations(account, ({ one }) => ({
   user: one(user, {
-    fields: [account.user_id],
+    fields: [account.userId],
     references: [user.id],
   }),
 }));
 
-export const apikey_relations = relations(apikey, ({ one }) => ({
+export const apikeyRelations = relations(apikey, ({ one }) => ({
   user: one(user, {
-    fields: [apikey.user_id],
+    fields: [apikey.userId],
     references: [user.id],
   }),
 }));
 
-export const organization_relations = relations(organization, ({ many }) => ({
+export const organizationRelations = relations(organization, ({ many }) => ({
   members: many(member),
   invitations: many(invitation),
 }));
 
-export const member_relations = relations(member, ({ one }) => ({
+export const memberRelations = relations(member, ({ one }) => ({
   organization: one(organization, {
-    fields: [member.organization_id],
+    fields: [member.organizationId],
     references: [organization.id],
   }),
   user: one(user, {
-    fields: [member.user_id],
+    fields: [member.userId],
     references: [user.id],
   }),
 }));
 
-export const invitation_relations = relations(invitation, ({ one }) => ({
+export const invitationRelations = relations(invitation, ({ one }) => ({
   organization: one(organization, {
-    fields: [invitation.organization_id],
+    fields: [invitation.organizationId],
     references: [organization.id],
   }),
   user: one(user, {
-    fields: [invitation.inviter_id],
+    fields: [invitation.inviterId],
     references: [user.id],
   }),
 }));

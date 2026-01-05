@@ -7,12 +7,25 @@ const { data: pages } = await useAsyncData('navigation', () => {
 
 const items = computed<NavigationMenuItem[]>(() => {
   if (!pages.value) return []
-  
-  return pages.value.map(page => ({
-    label: page.title,
-    to: page.path as string,
-    active: useRoute().path === page.path
-  })).reverse()
+
+  //TODO: just use predefined navigation
+  const route = useRoute()
+
+  const pageItems = pages.value
+    .map(page => ({
+      label: page.title,
+      to: page.path as string,
+      active: route.path === page.path
+    }))
+    .reverse()
+    
+  const isAuthenticated = !!useAuthStore().user
+
+  const extraItem: NavigationMenuItem = isAuthenticated
+    ? { label: 'Hub', to: '/hub', active: route.path === '/hub' }
+    : { label: 'Login', to: '/login', active: route.path === '/login' }
+
+  return [...pageItems, extraItem]
 })
 </script>
 

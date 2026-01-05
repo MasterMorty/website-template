@@ -3,10 +3,10 @@
 
 <template>
   <div>
-    <UContainer class="sm:border-x border-default pt-10">
+    <UMain>
       <AppHeader />
       <slot />
       <AppFooter />
-    </UContainer>
+    </UMain>
   </div>
 </template>

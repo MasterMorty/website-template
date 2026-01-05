@@ -1,24 +1,29 @@
 <script setup lang="ts">
-const colorMode = useColorMode()
+const authStore = useAuthStore();
+await authStore.init();
 
-const color = computed(() => (colorMode.value === 'dark' ? 'black' : 'white'))
+const colorMode = useColorMode();
+
+const color = computed(() => (colorMode.value === "dark" ? "black" : "white"));
 
 useHead({
   meta: [
-    { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-    { key: 'theme-color', name: 'theme-color', content: color }
+    { charset: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    { key: "theme-color", name: "theme-color", content: color },
   ],
-  link: [{ rel: 'icon', href: '/favicon.ico' }],
+  link: [{ rel: "icon", href: "/favicon.ico" }],
   htmlAttrs: {
-    lang: 'en'
-  }
-})
+    lang: "en",
+  },
+});
 </script>
 
 <template>
-  <NuxtLayout>
-    <NuxtRouteAnnouncer />
-    <NuxtPage />
-  </NuxtLayout>
+  <UApp>
+    <NuxtLayout>
+      <NuxtRouteAnnouncer />
+      <NuxtPage />
+    </NuxtLayout>
+  </UApp>
 </template>

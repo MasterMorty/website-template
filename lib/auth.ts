@@ -1,19 +1,20 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import db from "./db/index";
-import { admin, apiKey, organization } from "better-auth/plugins"
-
+import { admin, apiKey, organization } from "better-auth/plugins";
+import { ac, superadmin, admin as adminRole, user as userRole, viewer } from "./permissions";
+import { createAuthMiddleware } from "better-auth/api";
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
         provider: "sqlite",
     }),
-    advanced:{
+    advanced: {
         database: {
             generateId: false,
         }
     },
-    emailAndPassword: { 
+    emailAndPassword: {
         enabled: true,
     },
     user: {
@@ -24,8 +25,30 @@ export const auth = betterAuth({
             }
         }
     },
+    hooks: {
+        after: createAuthMiddleware(async (ctx) => {
+            if (ctx.path === "/get-session") {
+                if (!ctx.context.session) {
+                    return ctx.json({
+                        session: null,
+                        user: null,
+                    })
+                }
+                return ctx.json(ctx.context.session)
+            }
+        }),
+    },
     plugins: [
-        admin(),
+        admin({
+            ac,
+            roles: {
+                superadmin,
+                admin: adminRole,
+                user: userRole,
+                viewer,
+            },
+            defaultRole: "user",
+        }),
         apiKey(),
         organization(),
     ]
