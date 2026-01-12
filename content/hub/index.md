@@ -1,8 +1,7 @@
 ---
-title: home
-description: Access your account by logging in
-navigation: false
-layout: auth
+title: Home
+navigation: true
+icon: heroicons:squares-2x2-solid
 ---
 
 ::hub-home

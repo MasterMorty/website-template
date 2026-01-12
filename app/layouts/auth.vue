@@ -1,42 +1,68 @@
 <script setup lang="ts">
-const user = computed(() => useAuthStore().user);
+import type { NavigationMenuItem } from "@nuxt/ui";
 
-async function handleLogout() {
-  await useAuthStore().signOut();
-  navigateTo("/");
-}
+const { data: hubPages } = await useAsyncData("hub-navigation", () => {
+  return queryCollectionNavigation("hubPages", ["icon"]);
+});
+
+const route = useRoute();
+
+const items = computed<NavigationMenuItem[]>(() => {
+  if (!hubPages.value) return [];
+  return (
+    hubPages.value[0]?.children?.map((page) => ({
+      label: page.title,
+      to: page.path as string,
+      icon: page.icon as string,
+      active: route.path === page.path,
+    })) ?? []
+  );
+});
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="border-b">
-      <div
-        class="container mx-auto px-4 py-4 flex items-center justify-between"
+  <NDashboardGroup>
+    <template #sidebar>
+      <NDashboardSidebar
+        id="default"
+        collapsible
+        class="py-5"
       >
-        <div class="flex items-center gap-4">
-          <NuxtLink to="/hub" class="text-xl font-bold"> Novafox Hub </NuxtLink>
-        </div>
+        <template #header="{ collapsed }">
+          <HubMenu :collapsed="collapsed" />
+        </template>
 
-        <div class="flex items-center gap-4">
-          <div v-if="user" class="flex items-center gap-3">
-            <span class="text-sm text-gray-600">{{ user.name }}</span>
-            <UButton
-              icon="i-lucide-log-out"
-              variant="ghost"
+        <template #default>
+          <div class="w-full flex flex-col gap-1">
+            <NButton
+              v-for="(item, index) in items"
+              :key="index"
+              :label="item.label"
+              :to="item.to"
+              :active="route.path === item.to"
+              collapsible
               size="sm"
-              @click="handleLogout"
-            >
-              Logoutt
-            </UButton>
+              :icon="item.icon"
+            />
           </div>
-        </div>
-      </div>
-    </header>
+        </template>
+        <template #footer="{ collapse, collapsed}">
+          <div class="w-full">
+            <NButton
+              label="Toggle sidebar"
+              size="sm"
+              class="w-full"
+              collapsible
+              :icon="
+                collapsed ? 'lucide:panel-left-open' : 'lucide:panel-left-close'
+                "
+              @click="collapse(!collapsed)"
+            />
+          </div>
+        </template>
+      </NDashboardSidebar>
+    </template>
 
-    <!-- Main Content -->
-    <main class="flex-1">
-      <slot />
-    </main>
-  </div>
+    <slot />
+  </NDashboardGroup>
 </template>
