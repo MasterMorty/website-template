@@ -15,6 +15,20 @@ export default defineContentConfig({
       schema: z.object({
         icon: z.string().optional(),
       })
-    })
+    }),
+    hubAdminPages: defineCollection({
+      type: 'page',
+      source: 'hub/admin/*.md',
+      schema: z.object({
+        icon: z.string().optional(),
+      })
+    }),
+    hubSuperadminPages: defineCollection({
+      type: 'page',
+      source: 'hub/superadmin/*.md',
+      schema: z.object({
+        icon: z.string().optional(),
+      })
+    }),
   }
 })

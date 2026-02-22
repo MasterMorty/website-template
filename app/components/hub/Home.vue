@@ -1,45 +1,17 @@
 <script setup lang="ts">
-const value = ref({
-  type: 'doc',
-  content: [
-    {
-      type: 'heading',
-      attrs: {
-        level: 1
-      },
-      content: [
-        {
-          type: 'text',
-          text: 'Hello World'
-        }
-      ]
-    },
-    {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text: 'This is a '
-        },
-        {
-          type: 'text',
-          marks: [
-            {
-              type: 'bold'
-            }
-          ],
-          text: 'rich text'
-        },
-        {
-          type: 'text',
-          text: ' editor.'
-        }
-      ]
-    }
-  ]
-})
+const { activeProjectQuery, projectNamesQuery } = useActiveProject();
 </script>
 
 <template>
-  <UEditor v-model="value" class="w-full min-h-21" />
+  <div v-for="(project, index) in activeProjectQuery.data.value" :key="index">
+    {{ project }}
+  </div>
+
+  <div v-for="(project, index) in projectNamesQuery.data.value" :key="index">
+    {{ project }}
+  </div>
+
+  test
+
+  <!-- <UEditor v-model="value" class="w-full min-h-21" /> -->
 </template>

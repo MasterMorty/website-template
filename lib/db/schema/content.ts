@@ -1,6 +1,7 @@
 import { sqliteTable, text, int, index, unique } from "drizzle-orm/sqlite-core";
 import { project } from "./project";
 import { content_type } from "./content_type";
+import { media } from "./media";
 import { user } from "./auth";
 import { uuidv7 } from "uuidv7"
 
@@ -12,6 +13,7 @@ export const content = sqliteTable("content", {
     slug: text().notNull(),
     data: text({ mode: "json" }).notNull(), // Flexible JSON content
     status: text().default("draft").notNull(), // draft, published, archived
+    cover_image_id: text().references(() => media.id, { onDelete: "set null" }),
     created_by_id: text().notNull().references(() => user.id, { onDelete: "set null" }),
     updated_by_id: text().references(() => user.id, { onDelete: "set null" }),
     published_at: int(),

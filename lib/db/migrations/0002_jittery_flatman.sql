@@ -1,0 +1,1 @@
+ALTER TABLE `project` RENAME COLUMN "project_avatar_url" TO "project_avatar";

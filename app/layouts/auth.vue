@@ -1,23 +1,45 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from "@nuxt/ui";
+const auth = useAuthStore();
+const role = computed(() => auth.user?.role as string | undefined);
 
-const { data: hubPages } = await useAsyncData("hub-navigation", () => {
-  return queryCollectionNavigation("hubPages", ["icon"]);
-});
+const isAdmin = computed(() => role.value === 'admin' || role.value === 'superadmin');
+const isSuperadmin = computed(() => role.value === 'superadmin');
+
+const [{ data: hubNav }, { data: rawAdminPages }, { data: rawSuperadminPages }] = await Promise.all([
+  useAsyncData("hub-navigation", () => queryCollectionNavigation("hubPages", ["icon"])),
+  useAsyncData("hub-admin-pages", () => queryCollection("hubAdminPages").select("title", "path", "icon").all()),
+  useAsyncData("hub-superadmin-pages", () => queryCollection("hubSuperadminPages").select("title", "path", "icon").all()),
+]);
 
 const route = useRoute();
 
-const items = computed<NavigationMenuItem[]>(() => {
-  if (!hubPages.value) return [];
-  return (
-    hubPages.value[0]?.children?.map((page) => ({
-      label: page.title,
-      to: page.path as string,
-      icon: page.icon as string,
-      active: route.path === page.path,
-    })) ?? []
-  );
-});
+const baseItems = computed(() =>
+  hubNav.value?.[0]?.children?.map((page) => ({
+    label: page.title,
+    to: page.path as string,
+    icon: page.icon as string,
+  })) ?? []
+);
+
+const adminItems = computed(() =>
+  isAdmin.value
+    ? (rawAdminPages.value ?? []).map((page) => ({
+        label: page.title,
+        to: page.path,
+        icon: page.icon as string,
+      }))
+    : []
+);
+
+const superadminItems = computed(() =>
+  isSuperadmin.value
+    ? (rawSuperadminPages.value ?? []).map((page) => ({
+        label: page.title,
+        to: page.path,
+        icon: page.icon as string,
+      }))
+    : []
+);
 </script>
 
 <template>
@@ -35,8 +57,8 @@ const items = computed<NavigationMenuItem[]>(() => {
         <template #default>
           <div class="w-full flex flex-col gap-1">
             <NButton
-              v-for="(item, index) in items"
-              :key="index"
+              v-for="(item, index) in baseItems"
+              :key="'base-' + index"
               :label="item.label"
               :to="item.to"
               :active="route.path === item.to"
@@ -44,6 +66,38 @@ const items = computed<NavigationMenuItem[]>(() => {
               size="sm"
               :icon="item.icon"
             />
+
+            <template v-if="adminItems.length">
+              <p class="px-2 pt-3 pb-1 text-xs font-semibold text-muted uppercase tracking-wider collapsible-hidden">
+                Admin
+              </p>
+              <NButton
+                v-for="(item, index) in adminItems"
+                :key="'admin-' + index"
+                :label="item.label"
+                :to="item.to"
+                :active="route.path === item.to"
+                collapsible
+                size="sm"
+                :icon="item.icon"
+              />
+            </template>
+
+            <template v-if="superadminItems.length">
+              <p class="px-2 pt-3 pb-1 text-xs font-semibold text-muted uppercase tracking-wider collapsible-hidden">
+                Super Admin
+              </p>
+              <NButton
+                v-for="(item, index) in superadminItems"
+                :key="'superadmin-' + index"
+                :label="item.label"
+                :to="item.to"
+                :active="route.path === item.to"
+                collapsible
+                size="sm"
+                :icon="item.icon"
+              />
+            </template>
           </div>
         </template>
         <template #footer="{ collapse, collapsed}">

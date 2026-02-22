@@ -7,6 +7,7 @@ export const project = sqliteTable("project", {
     org_id: text().notNull().references(() => organization.id, { onDelete: "cascade" }),
     name: text().notNull(),
     slug: text().notNull(),
+    project_avatar: text(),
     description: text(),
     status: text().default("active").notNull(), // active, archived, deleted
     public_api_key: text().unique(),

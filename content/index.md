@@ -62,7 +62,7 @@ Add your own components and extend functionality easily
 alignment: center
 maxWidth: lg
 ---
-# About This Template
+## About This Template
 
 This is a decoupled website template that works with a headless CMS. Your content is synced via API and stored locally, ensuring your site stays online even if the CMS is down.
 

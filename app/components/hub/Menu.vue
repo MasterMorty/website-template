@@ -1,57 +1,79 @@
 <script setup lang="ts">
 import type { DropdownMenuItem } from "@nuxt/ui";
+import { useQueryClient } from "@tanstack/vue-query";
 
 defineProps<{
   collapsed?: boolean;
 }>();
 
 const auth = useAuthStore();
+const { activeProjectQuery, projectNamesQuery, projectId } = useActiveProject();
+const queryClient = useQueryClient()
 
 async function handleLogout() {
   await auth.signOut();
   navigateTo("/");
 }
 
-const teams = ref([
-  {
-    label: "Nuxt",
-    avatar: {
-      src: "https://github.com/nuxt.png",
-      alt: "Nuxt",
-    },
-  },
-  {
-    label: "NuxtHub",
-    avatar: {
-      src: "https://github.com/nuxt-hub.png",
-      alt: "NuxtHub",
-    },
-  },
-  {
-    label: "NuxtLabs",
-    avatar: {
-      src: "https://github.com/nuxtlabs.png",
-      alt: "NuxtLabs",
-    },
-  },
-]);
-const selectedTeam = ref(teams.value[0]);
+// ---- Organizations ----
+const orgs = ref<{ id: string; name: string; slug: string }[]>([])
+
+if (import.meta.client) {
+  authClient.organization.list().then(({ data }) => {
+    orgs.value = data ?? []
+  })
+}
+
+const activeOrgId = computed(
+  () => (auth.session?.data?.session as any)?.activeOrganizationId as string | null | undefined,
+)
+
+async function switchOrg(orgId: string) {
+  await authClient.organization.setActive({ organizationId: orgId })
+  // Clear active project so useActiveProject auto-picks the first one for the new org
+  projectId.value = ''
+  await queryClient.invalidateQueries({ queryKey: ['project-names'] })
+  await queryClient.invalidateQueries({ queryKey: ['project'] })
+}
+
+const selectedProject = computed(() => {
+  if (!activeProjectQuery.data.value?.name) return undefined;
+  return {
+    label: activeProjectQuery.data.value.name,
+  };
+});
 
 const items = computed<DropdownMenuItem[][]>(() => {
+  const orgItem: DropdownMenuItem | null =
+    orgs.value.length > 1
+      ? {
+          label: 'Organization',
+          icon: 'i-lucide-building-2',
+          children: orgs.value.map((org) => ({
+            label: org.name,
+            icon: activeOrgId.value === org.id ? 'i-lucide-check' : undefined,
+            onSelect(e: Event) {
+              e.preventDefault()
+              switchOrg(org.id)
+            },
+          })),
+        }
+      : null
+
   return [
-    teams.value.map((team) => ({
-      ...team,
+    (projectNamesQuery.data.value ?? []).map((project) => ({
+      label: project.name,
       onSelect() {
-        selectedTeam.value = team;
+        projectId.value = project.id
       },
     })),
+
     [
+      ...(orgItem ? [orgItem] : []),
       {
         label: "Profile",
         icon: "i-lucide-user",
-        onSelect() {
-          navigateTo("/hub/profile");
-        },
+        onSelect: () => navigateTo("/hub/profile"),
       },
       {
         label: "Logout",
@@ -59,13 +81,13 @@ const items = computed<DropdownMenuItem[][]>(() => {
         onSelect: handleLogout,
       },
     ],
-  ];
-});
+  ]
+})
 </script>
 
 <template>
   <NDropdownMenu
-    v-model:selected="selectedTeam"
+    :selected="selectedProject"
     :items="items"
     class="w-full"
     :content="{ align: 'center', collisionPadding: 12 }"
@@ -75,7 +97,7 @@ const items = computed<DropdownMenuItem[][]>(() => {
   >
     <NButton
       v-bind="{
-        ...selectedTeam,
+        ...selectedProject,
         trailingIcon: collapsed ? undefined : 'i-lucide-chevrons-up-down',
       }"
       class="w-full"

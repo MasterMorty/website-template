@@ -1,5 +1,5 @@
 import { createAuthClient } from "better-auth/vue";
-import { adminClient, organizationClient } from "better-auth/client/plugins";
+import { adminClient, organizationClient, apiKeyClient } from "better-auth/client/plugins";
 import { ac, superadmin, admin, user, viewer } from "~~/lib/permissions";
 
 export const authClient = createAuthClient({
@@ -14,6 +14,7 @@ export const authClient = createAuthClient({
             }
         }),
         organizationClient(),
+        apiKeyClient(),
     ]
 });
 
@@ -26,6 +27,7 @@ export const useAuthStore = defineStore("useAuthStore", () => {
 
     const user = computed(() => session.value?.data?.user);
     const loading = computed(() => session.value?.isPending);
+    const isAuthenticated = computed(() => !!user.value);
 
     async function signIn(email: string, password: string) {
         await authClient.signIn.email({
@@ -42,8 +44,10 @@ export const useAuthStore = defineStore("useAuthStore", () => {
 
     return {
         init,
+        session,
         user,
         loading,
+        isAuthenticated,
         signIn,
         signOut,
     };

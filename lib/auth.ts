@@ -49,7 +49,9 @@ export const auth = betterAuth({
             },
             defaultRole: "user",
         }),
-        apiKey(),
+        apiKey({
+            enableMetadata: true,
+        }),
         organization(),
     ]
 });
