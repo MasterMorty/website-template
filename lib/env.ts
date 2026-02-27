@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import tryParseEnv from './try-parse-env';
+import "dotenv/config";
 
 const envSchema = z.object({
     NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
