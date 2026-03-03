@@ -9,6 +9,8 @@ export const auth = betterAuth({
     database: drizzleAdapter(db, {
         provider: "sqlite",
     }),
+    baseURL: process.env.BETTER_AUTH_URL,
+    trustedOrigins: [process.env.APP_URL ?? "", process.env.BETTER_AUTH_URL ?? ""].filter(Boolean),
     advanced: {
         database: {
             generateId: false,
