@@ -1,0 +1,22 @@
+node_modules
+.nuxt
+.output
+.cache
+dist
+
+# local dev DB
+*.db
+*.db-shm
+*.db-wal
+
+.env.local
+.env.*.local
+
+# git
+.git
+.gitignore
+
+# misc
+*.log
+.DS_Store
+README.md
