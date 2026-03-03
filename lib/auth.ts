@@ -21,7 +21,7 @@ export const auth = betterAuth({
         additionalFields: {
             org_id: {
                 type: "string",
-                required: true,
+                required: false,
             }
         }
     },
