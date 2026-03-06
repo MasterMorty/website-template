@@ -2,11 +2,9 @@
 </script>
 
 <template>
-  <div>
-    <UMain>
-      <AppHeader />
-      <slot />
-      <AppFooter />
-    </UMain>
+  <div class="bg-white min-h-screen">
+    <AppHeader />
+    <slot />
+    <AppFooter />
   </div>
 </template>

@@ -1,53 +1,31 @@
-<script setup lang="ts">
-import type { NavigationMenuItem } from '#ui/types'
-
-const { data: pages } = await useAsyncData('navigation', () => {
-  return queryCollectionNavigation('pages')
-})
-
-const items = computed<NavigationMenuItem[]>(() => {
-  if (!pages.value) return []
-
-  //TODO: just use predefined navigation
-  const route = useRoute()
-
-  const pageItems = pages.value
-    .map(page => ({
-      label: page.title,
-      to: page.path as string,
-      active: route.path === page.path
-    }))
-    .reverse()
-    
-  const isAuthenticated = !!useAuthStore().user
-
-  const extraItem: NavigationMenuItem = isAuthenticated
-    ? { label: 'Hub', to: '/hub', active: route.path === '/hub' }
-    : { label: 'Login', to: '/login', active: route.path === '/login' }
-
-  return [...pageItems, extraItem]
-})
-</script>
-
 <template>
-  <UHeader class="backdrop-blur-lg border-b border-neutral-200/10">
-    <template #left>
-      <NuxtLink to="/" class="font-bold text-lg">
-        Logo
+  <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/90 border-b border-neutral-200">
+    <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between gap-6">
+      <!-- Logo -->
+      <NuxtLink to="/" class="font-bold text-base tracking-tight text-neutral-900 flex items-center gap-0.5 shrink-0">
+        <span class="text-orange-500">novafox</span>
       </NuxtLink>
-    </template>
 
-    <template #default>
-      <UNavigationMenu
-        :items="items"
-        variant="link"
-        color="neutral"
-        class="hidden lg:flex"
-      />
-    </template>
+      <!-- Nav -->
+      <nav class="hidden md:flex items-center gap-7 flex-1 justify-center">
+        <a href="#services" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Leistungen</a>
+        <a href="#projects" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Projekte</a>
+        <a href="#pricing" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Preise</a>
+        <a href="#faq" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">FAQ</a>
+      </nav>
 
-    <template #right>
-      <UColorModeButton />
-    </template>
-  </UHeader>
+      <!-- CTA -->
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="/hub" class="hidden sm:block text-sm text-neutral-500 hover:text-neutral-900 transition-colors">
+          Login
+        </a>
+        <a
+          href="mailto:info@novafox.at"
+          class="inline-flex items-center bg-orange-500 hover:bg-orange-600 transition-colors text-white font-semibold text-sm px-4 py-1.5 rounded-lg"
+        >
+          Jetzt anfragen
+        </a>
+      </div>
+    </div>
+  </header>
 </template>

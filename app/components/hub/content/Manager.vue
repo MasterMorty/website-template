@@ -443,9 +443,17 @@ const columns: TableColumn<ContentItem>[] = [
         </template>
 
         <!-- Empty -->
-        <UCard v-else-if="isEmpty" class="text-center">
-          <p class="opacity-70">No content yet</p>
-        </UCard>
+        <div v-else-if="isEmpty" class="flex flex-col items-center justify-center py-20 gap-5 text-center">
+          <div class="flex items-center justify-center w-16 h-16 rounded-2xl bg-muted text-muted-foreground">
+            <UIcon name="i-lucide-file-text" class="w-8 h-8" />
+          </div>
+          <p class="text-sm text-muted-foreground max-w-xs">
+            Create your first content item to get started
+          </p>
+          <NButton color="success" icon="i-heroicons-plus" @click="openCreateModal">
+            Create content
+          </NButton>
+        </div>
 
         <!-- List -->
         <UTable 

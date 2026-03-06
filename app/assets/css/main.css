@@ -2,9 +2,35 @@
 @import "@nuxt/ui";
 
 @theme {
-  --font-sans: 'Poppins', sans-serif;
+  --font-sans: 'Inter', 'DM Sans', system-ui, sans-serif;
 }
 
 :root {
   --ui-radius: 0.375rem;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #ffffff;
+}
+
+.nf-section-alt {
+  background-color: #f9f9f7;
+}
+
+.nf-card {
+  background: #ffffff;
+  border: 1px solid #e8e8e4;
+  border-radius: 16px;
+}
+
+.nf-grid-bg {
+  background-image:
+    linear-gradient(to right, #e8e8e4 1px, transparent 1px),
+    linear-gradient(to bottom, #e8e8e4 1px, transparent 1px);
+  background-size: 40px 40px;
 }
