@@ -1,17 +1,10 @@
 <script setup lang="ts">
-const { activeProjectQuery, projectNamesQuery } = useActiveProject();
+// const { activeProjectQuery, projectNamesQuery } = useActiveProject();
 </script>
 
 <template>
-  <div v-for="(project, index) in activeProjectQuery.data.value" :key="index">
-    {{ project }}
+  <div class="h-screen w-full flex flex-col justify-center items-center">
+    <p>Comming soon...</p>
+    <p>Start in the <a href="/hub/content-manager" class="text-orange-500 hover:text-orange-600">Content Manager</a></p>
   </div>
-
-  <div v-for="(project, index) in projectNamesQuery.data.value" :key="index">
-    {{ project }}
-  </div>
-
-  test
-
-  <!-- <UEditor v-model="value" class="w-full min-h-21" /> -->
 </template>
