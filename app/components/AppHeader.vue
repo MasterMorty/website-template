@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { useAuthStore } from '~/stores/auth'
+const authStore = useAuthStore()
+</script>
+
 <template>
   <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/90 border-b border-neutral-200">
     <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between gap-6">
@@ -16,9 +21,16 @@
 
       <!-- CTA -->
       <div class="flex items-center gap-3 shrink-0">
-        <a href="/hub" class="hidden sm:block text-sm text-neutral-500 hover:text-neutral-900 transition-colors">
-          Login
-        </a>
+        <NuxtLink
+          v-if="authStore.isAuthenticated"
+          to="/hub"
+          class="hidden sm:block text-sm text-neutral-500 hover:text-neutral-900 transition-colors"
+        >Hub</NuxtLink>
+        <NuxtLink
+          v-else
+          to="/login"
+          class="hidden sm:block text-sm text-neutral-500 hover:text-neutral-900 transition-colors"
+        >Login</NuxtLink>
         <a
           href="mailto:info@novafox.at"
           class="inline-flex items-center bg-orange-500 hover:bg-orange-600 transition-colors text-white font-semibold text-sm px-4 py-1.5 rounded-lg"
