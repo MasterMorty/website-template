@@ -13,7 +13,10 @@ const envSchema = z.object({
     R2_SECRET_ACCESS_KEY: z.string().min(1, 'R2_SECRET_ACCESS_KEY is required'),
     R2_ENDPOINT: z.string().url('R2_ENDPOINT must be a valid URL'),
     R2_BUCKET: z.string().min(1, 'R2_BUCKET is required'),
-    R2_PUBLIC_URL: z.string().url('R2_PUBLIC_URL must be a valid URL')
+    R2_PUBLIC_URL: z.string().url('R2_PUBLIC_URL must be a valid URL'),
+    RESEND_API_KEY: z.string().min(1, 'RESEND_API_KEY is required'),
+    RESEND_FROM_EMAIL: z.string().email('RESEND_FROM_EMAIL must be a valid email'),
+    RESEND_TO_EMAIL: z.string().email('RESEND_TO_EMAIL must be a valid email'),
 });
 
 tryParseEnv(envSchema);

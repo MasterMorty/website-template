@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'motion-v/nuxt',
     '@pinia/nuxt',
+    'lenis/nuxt'
   ],
 
   devtools: {
