@@ -6,44 +6,45 @@ const tiers = [
   {
     name: "Spark",
     price: "1.700",
-    period: "per project",
-    tagline: "One deliverable, full focus.",
+    period: "pro Projekt",
+    tagline: "Ein Ergebnis, voller Fokus.",
     features: [
-      "Strategy workshop",
-      "UI/UX design",
-      "Responsive development",
-      "Basic SEO setup",
-      "2 revision rounds",
+      "Strategie Workshop",
+      "UI/UX Design",
+      "Responsive Development",
+      "Basis SEO-Setup",
+      "2 Korrekturschleifen",
     ],
     popular: false,
   },
   {
     name: "Studio",
     price: "6.500",
-    period: "per project",
-    tagline: "The full novafox experience.",
+    period: "pro Projekt",
+    tagline: "Das volle novafox-Erlebnis.",
     features: [
-      "Brand strategy & positioning",
-      "Visual identity system",
-      "Custom website design",
-      "Frontend development",
-      "Motion & micro-interactions",
-      "SEO & performance",
-      "CMS integration",
+      "Alles aus Spark, plus:",
+      "Markenstrategie & Positionierung",
+      "Visuelle Identität",
+      "Individuelles Website-Design",
+      "Frontend-Entwicklung",
+      "Motion Design",
+      "SEO & Performance",
+      "CMS Integration",
     ],
     popular: true,
   },
   {
     name: "Partnership",
     price: "2.000",
-    period: "per month",
-    tagline: "Always-on creative support.",
+    period: "pro Monat",
+    tagline: "Kreativ-Support auf Abruf.",
     features: [
-      "Dedicated design hours",
-      "Priority dev queue",
-      "Monthly strategy calls",
-      "Performance monitoring",
-      "Continuous improvements",
+      "Feste Design-Stunden",
+      "Priorisierte Entwicklung",
+      "Monatliche Strategie-Calls",
+      "Performance-Monitoring",
+      "Laufende Verbesserungen",
     ],
     popular: false,
   },
@@ -85,7 +86,7 @@ onMounted(() => {
             <h2
               class="text-xs lg:text-[clamp(14px,0.8vw,18px)] text-neutral-400 uppercase font-medium tracking-wider mb-2"
             >
-              Pricing
+              Preise
             </h2>
           </HomeComponentsTextReveal>
 
@@ -93,13 +94,16 @@ onMounted(() => {
             class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
           >
             <HomeComponentsTextReveal :delay="0.1">
-              Transparent investment, no surprises.
+              Transparente Investition, keine Überraschungen.
             </HomeComponentsTextReveal>
             <HomeComponentsTextReveal :delay="0.15">
-              Every project receives the same obsessive
+              Jedes Projekt erhält die gleiche obsessive
             </HomeComponentsTextReveal>
             <HomeComponentsTextReveal :delay="0.2">
-              attention to craft — the scope shapes the number.
+              Hingabe zum Handwerk, der Umfang bestimmt
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.25">
+              den Preis.
             </HomeComponentsTextReveal>
           </p>
         </div>
@@ -134,7 +138,7 @@ onMounted(() => {
                   d="M23 46C24.5 46 25.73 44.9 25.94 43.34C28 29.43 29.9 27.5 43.27 25.98C44.81 25.79 46 24.5 46 23C46 21.48 44.83 20.23 43.29 20C30 18.15 28.35 16.53 25.94 2.64C25.67 1.1 24.48 0 23 0C21.48 0 20.27 1.1 20.02 2.66C18 16.55 16.1 18.48 2.75 20C1.17 20.21 0 21.46 0 23C0 24.5 1.12 25.75 2.71 25.98C16.02 27.87 17.65 29.47 20.02 43.36C20.33 44.92 21.54 46 23 46Z"
                 />
               </svg>
-              Popular
+              Beliebt
             </span>
           </div>
 
@@ -157,7 +161,7 @@ onMounted(() => {
                   tier.popular ? 'text-neutral-900/40' : 'text-neutral-500'
                 "
               >
-                From
+                Ab
               </p>
 
               <div class="flex items-start gap-0.5">
@@ -169,7 +173,7 @@ onMounted(() => {
                       : 'text-neutral-400'
                   "
                 >
-                  €
+                  &euro;
                 </span>
 
                 <span
@@ -266,7 +270,7 @@ onMounted(() => {
                   : 'pricing-cta--default'
               "
             >
-              Let's talk
+              Jetzt anfragen
             </a>
           </div>
         </article>
@@ -277,14 +281,14 @@ onMounted(() => {
         <p
           class="text-neutral-500 text-[clamp(13px,0.9vw,16px)] font-medium text-center max-w-md leading-relaxed"
         >
-          Every project is unique —
+          Jedes Projekt ist einzigartig —
           <a
             href="mailto:info@novafox.at"
             class="text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4 decoration-orange-400/30 hover:decoration-orange-300/50"
           >
-            reach out
+            schreib mir
           </a>
-          and I'll put together a custom proposal.
+          und ich erstelle ein individuelles Angebot.
         </p>
       </div>
     </div>

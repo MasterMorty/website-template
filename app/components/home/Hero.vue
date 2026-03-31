@@ -177,7 +177,7 @@ onBeforeUnmount(() => {
             <path d="M12 5v14" />
             <path d="m19 12-7 7-7-7" />
           </svg>
-          <p class="text-[clamp(12px,1.2vw,20px)] font-medium">Scroll for</p>
+          <p class="text-[clamp(12px,1.2vw,20px)] font-medium">Mehr</p>
         </div>
       </HomeComponentsTextReveal>
     </div>
@@ -191,10 +191,17 @@ onBeforeUnmount(() => {
         fetchpriority="high"
         class="hero_footer-img"
         :style="{ opacity: gifOpacity }"
+        :initial="{ opacity: 0, y: 20 }"
+        :while-in-view="{ y: 0, opacity: 1 }"
+        :in-view-options="{ once: true }"
+        :transition="{
+          delay: 0.7,
+          ease: [0.16, 1, 0.3, 1],
+        }"
       />
       <HomeComponentsTextReveal :delay="0.5" :duration="1">
         <div class="flex items-center gap-1">
-          <p class="text-[clamp(12px,1.2vw,20px)] font-medium">more</p>
+          <p class="text-[clamp(12px,1.2vw,20px)] font-medium">entdecken</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

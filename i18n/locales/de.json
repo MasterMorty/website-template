@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "services": "Leistungen",
+    "work": "Arbeiten",
+    "techStack": "Technologien",
+    "price": "Preise",
+    "login": "Anmelden",
+    "contact": "Kontakt"
+  },
+  "services": {
+    "title": "Leistungen",
+    "intro1": "Mit jedem Projekt weiterentwickelt und auf Wirkung ausgelegt,",
+    "intro2": "umfasst mein Prozess Design, Entwicklung und",
+    "intro3": "Markenstrategie \u2013 Vision und Umsetzung",
+    "intro4": "in Einklang gebracht f\u00fcr jedes Projekt.",
+    "brandStrategy": "Markenstrategie",
+    "brandStrategyDesc1": "Anderen helfen, den Zweck und die",
+    "brandStrategyDesc2": "Einzigartigkeit ihrer Marke zu entdecken \u2013",
+    "brandStrategyDesc3": "und den Plan, um die Hingabe",
+    "brandStrategyDesc4": "ihrer Kunden zu gewinnen.",
+    "digitalDesign": "Digitales Design",
+    "digitalDesignDesc1": "Gestaltung ansprechender digitaler Erlebnisse, die",
+    "digitalDesignDesc2": "Markenstrategie und Kreativit\u00e4t mit UX-Erkenntnissen",
+    "digitalDesignDesc3": "vereinen, um Funktionalit\u00e4t und Benutzerfreundlichkeit zu liefern.",
+    "development": "Entwicklung",
+    "developmentDesc1": "Digitale Produkte entwickeln, die Design,",
+    "developmentDesc2": "Technologie und Gesch\u00e4ftsstrategie vereinen,",
+    "developmentDesc3": "um nahtlose Nutzererlebnisse zu liefern.",
+    "tags": {
+      "researchInsights": "Research & Insights",
+      "brandStrategy": "Markenstrategie",
+      "competitiveStudy": "Wettbewerbsanalyse",
+      "voiceTone": "Stimme & Ton",
+      "namingCopywriting": "Naming & Copywriting",
+      "workshops": "Workshops",
+      "identityDesign": "Identity Design",
+      "wireframing": "Wireframing",
+      "ui": "UI",
+      "ux": "UX",
+      "webDesign": "Webdesign",
+      "productDesign": "Produktdesign",
+      "frontendDevelopment": "Frontend-Entwicklung",
+      "seo": "SEO",
+      "motion": "Motion",
+      "animation": "Animation",
+      "webgl": "WebGL",
+      "cmsDevelopment": "CMS-Entwicklung",
+      "databases": "Datenbanken"
+    }
+  },
+  "projects": {
+    "my": "Meine",
+    "work": "Arbeiten",
+    "seeAll": "Alle ansehen",
+    "volleyeDesc": "KI-gest\u00fctzte Volleyball-Wertung mit Gestensteuerung und Live-Kommentar. Computer Vision trifft Sport.",
+    "mostiDesc": "MTB-Coaching- & Tourenplattform mit pers\u00f6nlichen Erlebnissen von Anf\u00e4ngerkursen bis zu Geheimtrails in Tirol."
+  },
+  "tech": {
+    "title": "Technologien",
+    "desc1": "Aufgebaut auf Tools, die schnell liefern und weiter skalieren \u2013",
+    "desc2": "jede Technologie gew\u00e4hlt f\u00fcr Pr\u00e4zision,",
+    "desc3": "Performance und kreativen Spielraum."
+  },
+  "pricing": {
+    "title": "Preise",
+    "desc1": "Transparente Investition, keine \u00dcberraschungen.",
+    "desc2": "Jedes Projekt erh\u00e4lt die gleiche obsessive",
+    "desc3": "Hingabe zum Handwerk \u2013 der Umfang bestimmt die Zahl.",
+    "popular": "Beliebt",
+    "from": "Ab",
+    "perProject": "pro Projekt",
+    "perMonth": "pro Monat",
+    "letsTalk": "Jetzt anfragen",
+    "bottomNote1": "Jedes Projekt ist einzigartig \u2013",
+    "bottomNote2": "schreib mir",
+    "bottomNote3": "und ich erstelle ein individuelles Angebot.",
+    "spark": {
+      "name": "Spark",
+      "tagline": "Ein Ergebnis, voller Fokus.",
+      "features": {
+        "strategyWorkshop": "Strategie-Workshop",
+        "uiUxDesign": "UI/UX-Design",
+        "responsiveDevelopment": "Responsive Entwicklung",
+        "basicSeoSetup": "Basis-SEO-Setup",
+        "revisionRounds": "2 Korrekturschleifen"
+      }
+    },
+    "studio": {
+      "name": "Studio",
+      "tagline": "Das volle novafox-Erlebnis.",
+      "features": {
+        "brandStrategy": "Markenstrategie & Positionierung",
+        "visualIdentity": "Visuelles Identit\u00e4tssystem",
+        "customWebsite": "Individuelles Website-Design",
+        "frontendDev": "Frontend-Entwicklung",
+        "motionMicro": "Motion & Micro-Interactions",
+        "seoPerformance": "SEO & Performance",
+        "cmsIntegration": "CMS-Integration"
+      }
+    },
+    "partnership": {
+      "name": "Partnership",
+      "tagline": "Kreativ-Support auf Abruf.",
+      "features": {
+        "dedicatedHours": "Feste Design-Stunden",
+        "priorityQueue": "Priorisierte Entwicklung",
+        "strategyCalls": "Monatliche Strategie-Calls",
+        "performanceMonitoring": "Performance-Monitoring",
+        "continuousImprovements": "Laufende Verbesserungen"
+      }
+    }
+  },
+  "marquee": {
+    "webDesign": "Webdesign",
+    "development": "Entwicklung",
+    "branding": "Branding",
+    "motion": "Motion",
+    "uiUx": "UI/UX"
+  },
+  "footer": {
+    "work": "Arbeiten",
+    "contact": "Kontakt",
+    "instagram": "Instagram",
+    "github": "Github",
+    "services": "Leistungen",
+    "linkedin": "LinkedIn",
+    "copyright": "\u00a9 2024 novafox. Alle Rechte vorbehalten.",
+    "agb": "AGB",
+    "imprint": "Impressum",
+    "dataPrivacy": "Datenschutz"
+  },
+  "login": {
+    "welcomeBack": "Willkommen zur\u00fcck!",
+    "subtitle": "Hey! Bitte gib deine Daten ein.",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "logIn": "Anmelden",
+    "loggingIn": "Anmeldung l\u00e4uft\u2026",
+    "errorEmpty": "Bitte f\u00fclle alle Felder aus.",
+    "errorInvalid": "Ung\u00fcltige E-Mail oder Passwort.",
+    "copyright": "\u00a9 2026 novafox. Alle Rechte vorbehalten."
+  },
+  "seo": {
+    "title": "novafox \u2013 Digital. Wild. Au\u00dfergew\u00f6hnlich.",
+    "description": "novafox \u2013 Ein Design- & Entwicklungsstudio, das au\u00dfergew\u00f6hnliche digitale Erlebnisse f\u00fcr ambitionierte Marken schafft."
+  },
+  "error": {
+    "title": "Seite nicht gefunden",
+    "description": "Es tut uns leid, aber diese Seite konnte nicht gefunden werden."
+  },
+  "language": {
+    "label": "Sprache",
+    "en": "English",
+    "de": "Deutsch"
+  }
+}

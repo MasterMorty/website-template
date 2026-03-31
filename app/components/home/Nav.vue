@@ -93,7 +93,7 @@ const logo = {
 <template>
   <header>
     <div
-      class="fixed items-center justify-between left-4 lg:left-8 right-4 lg:right-8 top-4.5 lg:top-6 flex gap-4 lg:gap-8 z-50"
+      class="fixed items-center justify-between text-[#404040] left-4 lg:left-8 right-4 lg:right-8 top-4.5 lg:top-6 flex gap-4 lg:gap-8 z-50"
     >
       <motion.div
         class="relative"
@@ -150,13 +150,13 @@ const logo = {
           <HomeComponentsButton href="#services" label="Services" />
         </HomeComponentsTextReveal>
         <HomeComponentsTextReveal :delay="0.9" :duration="1">
-          <HomeComponentsButton href="#work" label="Work" />
+          <HomeComponentsButton href="#work" label="Arbeiten" />
         </HomeComponentsTextReveal>
         <HomeComponentsTextReveal :delay="1" :duration="1">
-          <HomeComponentsButton href="#tech" label="Tech Stack" />
+          <HomeComponentsButton href="#tech" label="Technologien" />
         </HomeComponentsTextReveal>
         <HomeComponentsTextReveal :delay="1.1" :duration="1">
-          <HomeComponentsButton href="#pricing" label="Price" />
+          <HomeComponentsButton href="#pricing" label="Preise" />
         </HomeComponentsTextReveal>
       </div>
       <div class="inline-flex items-center">
@@ -175,7 +175,7 @@ const logo = {
             ease: [0.16, 1, 0.3, 1],
           }"
         >
-          <HomeComponentsFollowMouseButton label="Contact" />
+          <HomeComponentsFollowMouseButton label="Kontakt" />
         </motion.div>
       </div>
     </div>

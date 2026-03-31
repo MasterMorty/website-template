@@ -15,21 +15,23 @@
               Services
             </h2>
           </HomeComponentsTextReveal>
-
           <p
             class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
           >
             <HomeComponentsTextReveal :delay="0.1">
-              Evolving with every brief and built for impact,
+              Mit jedem Projekt entwickle ich mich weiter -
             </HomeComponentsTextReveal>
             <HomeComponentsTextReveal :delay="0.15">
-              my process spans design, development, and 
+              Mein Prozess vereint Design, Entwicklung und
             </HomeComponentsTextReveal>
             <HomeComponentsTextReveal :delay="0.2">
-               brand strategy—aligning vision with execution 
+              Markenstrategie - mit dem Ziel, Vision und
             </HomeComponentsTextReveal>
             <HomeComponentsTextReveal :delay="0.25">
-              to bring clarity and edge to every project.
+              Umsetzung für jedes Projekt in Einklang zu
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.3">
+              bringen.
             </HomeComponentsTextReveal>
           </p>
         </div>
@@ -52,11 +54,14 @@
               </p>
             </HomeComponentsTextReveal>
 
-            <HomeComponentsTextReveal :delay="0.05" class="lg:col-span-4 mb-6 lg:mb-0">
+            <HomeComponentsTextReveal
+              :delay="0.05"
+              class="lg:col-span-4 mb-6 lg:mb-0"
+            >
               <h3
                 class="text-[clamp(24px,3.3vw,56px)] text-neutral-100 font-medium lg:-mt-4"
               >
-                Brand Strategy
+                Markenstrategie
               </h3>
             </HomeComponentsTextReveal>
 
@@ -67,43 +72,50 @@
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
               >
                 <HomeComponentsTextReveal :delay="0.1">
-                  Helping others uncover their brand's 
+                  Ich helfe dabei, den Kern und die
                 </HomeComponentsTextReveal>
                 <HomeComponentsTextReveal :delay="0.14">
-                  purpose and uniqueness – and the 
+                  Einzigartigkeit einer Marke zu
                 </HomeComponentsTextReveal>
                 <HomeComponentsTextReveal :delay="0.18">
-                  game plan to deliver it to win their
+                  erkennen und eine klare Strategie zu
                 </HomeComponentsTextReveal>
                 <HomeComponentsTextReveal :delay="0.22">
-                  customers' devotion.
+                  entwickeln, um Kunden nachhaltig
+                </HomeComponentsTextReveal>
+                <HomeComponentsTextReveal :delay="0.26">
+                  zu begeistern.
                 </HomeComponentsTextReveal>
               </p>
 
-              <HomeComponentsTextReveal :delay="0.22">
-                <ul
-                  class="flex gap-1.5 flex-wrap text-[10px] uppercase tracking-[1.1] text-neutral-100"
-                >
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Research & Insights
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Brand Strategy
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Competitive Study
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Voice & Tone
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Naming & Copywriting
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Workshops
-                  </li>
-                </ul>
-              </HomeComponentsTextReveal>
+              <p
+                class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
+              >
+                <HomeComponentsTextReveal>
+                  <ul
+                    class="flex gap-1.5 flex-wrap text-[10px] uppercase tracking-[1.1] text-neutral-100"
+                  >
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Research & Insights
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Markenstrategie
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Wettbewerbsanalyse
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Stimme & Ton
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Naming & Copywriting
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Workshops
+                    </li>
+                  </ul>
+                </HomeComponentsTextReveal>
+              </p>
             </div>
 
             <div class="lg:col-span-3">
@@ -112,7 +124,7 @@
               >
                 <img
                   :src="'https://cdn.novafox.at/projects/019d3904-9a7b-7684-9b1c-5ce316eab8fc/media/019d3b6b-e4c7-7768-9cca-8e239689596d.png'"
-                  alt="Brand Strategy"
+                  alt="Markenstrategie"
                   class="absolute inset-0 top-2 w-full h-full object-cover"
                 >
               </div>
@@ -131,7 +143,10 @@
               </p>
             </HomeComponentsTextReveal>
 
-            <HomeComponentsTextReveal :delay="0.05" class="lg:col-span-4 mb-6 lg:mb-0">
+            <HomeComponentsTextReveal
+              :delay="0.05"
+              class="lg:col-span-4 mb-6 lg:mb-0"
+            >
               <h3
                 class="text-[clamp(24px,3.3vw,56px)] text-neutral-100 font-medium lg:-mt-4"
               >
@@ -146,40 +161,46 @@
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
               >
                 <HomeComponentsTextReveal :delay="0.1">
-                  Designing engaging digital experiences that
+                  Gestaltung digitaler Erlebnisse, die
                 </HomeComponentsTextReveal>
                 <HomeComponentsTextReveal :delay="0.14">
-                  combine brand strategy and creativity with UX
+                  Markenstrategie, Kreativität und UX
                 </HomeComponentsTextReveal>
                 <HomeComponentsTextReveal :delay="0.18">
-                  insights to deliver functionality and ease of use.
+                  vereinen – für funktionale und
+                </HomeComponentsTextReveal>
+                <HomeComponentsTextReveal :delay="0.22">
+                  benutzerfreundliche Lösungen.
                 </HomeComponentsTextReveal>
               </p>
-
-              <HomeComponentsTextReveal :delay="0.22">
-                <ul
-                  class="flex gap-1.5 flex-wrap text-[10px] uppercase tracking-[1.1] text-neutral-100"
-                >
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Identity Design
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Wireframing
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    UI
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    UX
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Web Design
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Product Design
-                  </li>
-                </ul>
-              </HomeComponentsTextReveal>
+              <p
+                class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
+              >
+                <HomeComponentsTextReveal>
+                  <ul
+                    class="flex gap-1.5 flex-wrap text-[10px] uppercase tracking-[1.1] text-neutral-100"
+                  >
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Identity Design
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Wireframing
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      UI
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      UX
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Web Design
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Produktdesign
+                    </li>
+                  </ul>
+                </HomeComponentsTextReveal>
+              </p>
             </div>
 
             <div class="lg:col-span-3">
@@ -207,7 +228,10 @@
               </p>
             </HomeComponentsTextReveal>
 
-            <HomeComponentsTextReveal :delay="0.05" class="lg:col-span-4 mb-6 lg:mb-0">
+            <HomeComponentsTextReveal
+              :delay="0.05"
+              class="lg:col-span-4 mb-6 lg:mb-0"
+            >
               <h3
                 class="text-[clamp(24px,3.3vw,56px)] text-neutral-100 font-medium lg:-mt-4"
               >
@@ -222,43 +246,50 @@
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
               >
                 <HomeComponentsTextReveal :delay="0.1">
-                  Building digital products that combine design,
+                  Entwicklung digitaler Produkte,
                 </HomeComponentsTextReveal>
                 <HomeComponentsTextReveal :delay="0.14">
-                  technology, and business strategy to deliver
+                  die Design, Technologie und
                 </HomeComponentsTextReveal>
                 <HomeComponentsTextReveal :delay="0.18">
-                  seamless user experiences.
+                  Geschäftsstrategie vereinen -
+                </HomeComponentsTextReveal>
+                <HomeComponentsTextReveal :delay="0.22">
+                  für nahtlose Nutzererlebnisse.
                 </HomeComponentsTextReveal>
               </p>
 
-              <HomeComponentsTextReveal :delay="0.22">
-                <ul
-                  class="flex gap-1.5 flex-wrap text-[10px] uppercase tracking-[1.1] text-neutral-100"
-                >
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Frontend Development
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    SEO
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Motion
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Animation
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    WebGL
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    CMS Development
-                  </li>
-                  <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
-                    Databases
-                  </li>
-                </ul>
-              </HomeComponentsTextReveal>
+              <p
+                class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
+              >
+                <HomeComponentsTextReveal>
+                  <ul
+                    class="flex gap-1.5 flex-wrap text-[10px] uppercase tracking-[1.1] text-neutral-100"
+                  >
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Frontend Development
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      SEO
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Motion
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Animation
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      WebGL
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      CMS Development
+                    </li>
+                    <li class="bg-neutral-100/10 px-2 pt-2 pb-1.5 rounded-md">
+                      Datenbanken
+                    </li>
+                  </ul>
+                </HomeComponentsTextReveal>
+              </p>
             </div>
 
             <div class="lg:col-span-3">

@@ -39,5 +39,8 @@ const initialY = props.reverse ? "-100%" : "100%";
 <style scoped>
 .text-reveal-mask {
   overflow: hidden;
+  /* Prevent descenders (g, y, p, q) from being clipped by the reveal mask. */
+  padding-block: 0.08em;
+  margin-block: -0.08em;
 }
 </style>

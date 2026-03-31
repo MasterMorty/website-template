@@ -351,7 +351,7 @@ function onHoverAnimationComplete() {
           <h2
             class="text-xs lg:text-[clamp(14px,0.8vw,18px)] text-[#8b7b63] uppercase font-medium tracking-wider mb-2"
           >
-            Tech Stack
+            Technologien
           </h2>
         </HomeComponentsTextReveal>
 
@@ -359,13 +359,13 @@ function onHoverAnimationComplete() {
           class="text-[#1f2937] text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
         >
           <HomeComponentsTextReveal :delay="0.1">
-            Built on tools that ship fast and scale further —
+            Basierend auf skalierbaren Tools - gezielt
           </HomeComponentsTextReveal>
           <HomeComponentsTextReveal :delay="0.15">
-            every technology chosen for precision,
+             gewählt für Präzision, Performance und kreativen
           </HomeComponentsTextReveal>
           <HomeComponentsTextReveal :delay="0.2">
-            performance, and creative latitude.
+             Spielraum.
           </HomeComponentsTextReveal>
         </p>
       </div>

@@ -2,7 +2,7 @@
 useSeoMeta({
   title: "novafox – Digital. Wild. Exceptional.",
   description:
-    "novafox – A design & development studio crafting exceptional digital experiences for ambitious brands.",
+    "novafox \u2013 Ein Design- & Entwicklungsstudio, das au\u00dfergew\u00f6hnliche digitale Erlebnisse f\u00fcr ambitionierte Marken schafft.",
 });
 </script>
 

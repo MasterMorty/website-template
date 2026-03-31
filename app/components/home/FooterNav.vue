@@ -25,16 +25,16 @@ const bigTextY = useTransform(scrollYProgress, [0, 1], ["-12vh", "8vh"]);
 
       <div class="relative z-10 grid grid-cols-2 gap-2 lg:grid-cols-12 lg:gap-4">
         <a href="#projects" class="ftnav-card ftnav-card--tall col-span-2 h-40 lg:col-span-8 flex items-end py-4 px-5 rounded-xl font-medium no-underline leading-tight" style="color: #0a0a0a;">
-          Work
+          Arbeiten
         </a>
         <a href="mailto:info@novafox.at" class="ftnav-card ftnav-card--tall h-32 lg:col-span-4 flex items-end py-4 px-5 rounded-xl font-medium no-underline leading-tight" style="color: #0a0a0a;">
-          Contact
+          Kontakt
         </a>
         <a href="https://www.instagram.com/novafox.at/" target="_blank" rel="noopener noreferrer" class="ftnav-card h-32 lg:col-span-3 lg:h-48 flex items-end py-4 px-5 rounded-xl font-medium no-underline leading-tight" style="color: #0a0a0a;">
           Instagram
         </a>
         <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="ftnav-card h-32 lg:col-span-3 lg:h-48 flex items-end py-4 px-5 rounded-xl font-medium no-underline leading-tight" style="color: #0a0a0a;">
-          Github
+          GitHub
         </a>
         <a href="#services" class="ftnav-card h-32 lg:col-span-3 lg:h-48 flex items-end py-4 px-5 rounded-xl font-medium no-underline leading-tight" style="color: #0a0a0a;">
           Services
@@ -45,12 +45,12 @@ const bigTextY = useTransform(scrollYProgress, [0, 1], ["-12vh", "8vh"]);
       </div>
 
       <div class="relative z-10 mt-8 pb-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-gray-400">
-        <p>&copy; 2024 novafox. All rights reserved.</p>
+        <p>&copy; 2024 novafox. Alle Rechte vorbehalten.</p>
         <a href="/agb" class="hover:text-gray-600 transition-colors">AGB</a>
         <span aria-hidden="true">|</span>
-        <a href="/imprint" class="hover:text-gray-600 transition-colors">Imprint</a>
+        <a href="/imprint" class="hover:text-gray-600 transition-colors">Impressum</a>
         <span aria-hidden="true">|</span>
-        <a href="/data-privacy" class="hover:text-gray-600 transition-colors">Data Privacy</a>
+        <a href="/data-privacy" class="hover:text-gray-600 transition-colors">Datenschutz</a>
       </div>
     </div>
   </section>

@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "services": "Services",
+    "work": "Work",
+    "techStack": "Tech Stack",
+    "price": "Price",
+    "login": "Login",
+    "contact": "Contact"
+  },
+  "services": {
+    "title": "Services",
+    "intro1": "Evolving with every brief and built for impact,",
+    "intro2": "my process spans design, development, and",
+    "intro3": "brand strategy—aligning vision with execution",
+    "intro4": "to bring clarity and edge to every project.",
+    "brandStrategy": "Brand Strategy",
+    "brandStrategyDesc1": "Helping others uncover their brand's",
+    "brandStrategyDesc2": "purpose and uniqueness – and the",
+    "brandStrategyDesc3": "game plan to deliver it to win their",
+    "brandStrategyDesc4": "customers' devotion.",
+    "digitalDesign": "Digital Design",
+    "digitalDesignDesc1": "Designing engaging digital experiences that",
+    "digitalDesignDesc2": "combine brand strategy and creativity with UX",
+    "digitalDesignDesc3": "insights to deliver functionality and ease of use.",
+    "development": "Development",
+    "developmentDesc1": "Building digital products that combine design,",
+    "developmentDesc2": "technology, and business strategy to deliver",
+    "developmentDesc3": "seamless user experiences.",
+    "tags": {
+      "researchInsights": "Research & Insights",
+      "brandStrategy": "Brand Strategy",
+      "competitiveStudy": "Competitive Study",
+      "voiceTone": "Voice & Tone",
+      "namingCopywriting": "Naming & Copywriting",
+      "workshops": "Workshops",
+      "identityDesign": "Identity Design",
+      "wireframing": "Wireframing",
+      "ui": "UI",
+      "ux": "UX",
+      "webDesign": "Web Design",
+      "productDesign": "Product Design",
+      "frontendDevelopment": "Frontend Development",
+      "seo": "SEO",
+      "motion": "Motion",
+      "animation": "Animation",
+      "webgl": "WebGL",
+      "cmsDevelopment": "CMS Development",
+      "databases": "Databases"
+    }
+  },
+  "projects": {
+    "my": "My",
+    "work": "Work",
+    "seeAll": "See all",
+    "volleyeDesc": "AI-powered volleyball scoring with gesture control and live commentary. Computer vision meets sport.",
+    "mostiDesc": "MTB coaching & tour platform with personal experiences from beginner courses to secret trails in Tyrol."
+  },
+  "tech": {
+    "title": "Tech Stack",
+    "desc1": "Built on tools that ship fast and scale further —",
+    "desc2": "every technology chosen for precision,",
+    "desc3": "performance, and creative latitude."
+  },
+  "pricing": {
+    "title": "Pricing",
+    "desc1": "Transparent investment, no surprises.",
+    "desc2": "Every project receives the same obsessive",
+    "desc3": "attention to craft — the scope shapes the number.",
+    "popular": "Popular",
+    "from": "From",
+    "perProject": "per project",
+    "perMonth": "per month",
+    "letsTalk": "Let's talk",
+    "bottomNote1": "Every project is unique —",
+    "bottomNote2": "reach out",
+    "bottomNote3": "and I'll put together a custom proposal.",
+    "spark": {
+      "name": "Spark",
+      "tagline": "One deliverable, full focus.",
+      "features": {
+        "strategyWorkshop": "Strategy workshop",
+        "uiUxDesign": "UI/UX design",
+        "responsiveDevelopment": "Responsive development",
+        "basicSeoSetup": "Basic SEO setup",
+        "revisionRounds": "2 revision rounds"
+      }
+    },
+    "studio": {
+      "name": "Studio",
+      "tagline": "The full novafox experience.",
+      "features": {
+        "brandStrategy": "Brand strategy & positioning",
+        "visualIdentity": "Visual identity system",
+        "customWebsite": "Custom website design",
+        "frontendDev": "Frontend development",
+        "motionMicro": "Motion & micro-interactions",
+        "seoPerformance": "SEO & performance",
+        "cmsIntegration": "CMS integration"
+      }
+    },
+    "partnership": {
+      "name": "Partnership",
+      "tagline": "Always-on creative support.",
+      "features": {
+        "dedicatedHours": "Dedicated design hours",
+        "priorityQueue": "Priority dev queue",
+        "strategyCalls": "Monthly strategy calls",
+        "performanceMonitoring": "Performance monitoring",
+        "continuousImprovements": "Continuous improvements"
+      }
+    }
+  },
+  "marquee": {
+    "webDesign": "Web Design",
+    "development": "Development",
+    "branding": "Branding",
+    "motion": "Motion",
+    "uiUx": "UI/UX"
+  },
+  "footer": {
+    "work": "Work",
+    "contact": "Contact",
+    "instagram": "Instagram",
+    "github": "Github",
+    "services": "Services",
+    "linkedin": "LinkedIn",
+    "copyright": "\u00a9 2024 novafox. All rights reserved.",
+    "agb": "AGB",
+    "imprint": "Imprint",
+    "dataPrivacy": "Data Privacy"
+  },
+  "login": {
+    "welcomeBack": "Welcome back!",
+    "subtitle": "Hey buddy. Please enter your details.",
+    "email": "Email",
+    "password": "Password",
+    "logIn": "Log in",
+    "loggingIn": "Logging in\u2026",
+    "errorEmpty": "Please fill in all fields.",
+    "errorInvalid": "Invalid email or password.",
+    "copyright": "\u00a9 2026 novafox. All rights reserved."
+  },
+  "seo": {
+    "title": "novafox \u2013 Digital. Wild. Exceptional.",
+    "description": "novafox \u2013 A design & development studio crafting exceptional digital experiences for ambitious brands."
+  },
+  "error": {
+    "title": "Page not found",
+    "description": "We are sorry but this page could not be found."
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "de": "Deutsch"
+  }
+}

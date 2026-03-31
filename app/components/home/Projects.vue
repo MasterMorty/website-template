@@ -7,7 +7,7 @@ const projects = [
     num: "01",
     name: "volleye",
     tags: ["UI Design", "Development", "AI"],
-    desc: "AI-powered volleyball scoring with gesture control and live commentary. Computer vision meets sport.",
+    desc: "KI-gestützte Volleyball-Wertung mit Gestensteuerung und Live-Kommentar. Computer Vision trifft Sport.",
     img: "/images/home/volleye_icon.jpg",
     url: "https://portfolio.fh-salzburg.ac.at/projects/2025-volleye",
     color: "#1a1a2e",
@@ -16,7 +16,7 @@ const projects = [
     num: "02",
     name: "mosti.tirol",
     tags: ["Web Design", "Web Development", "CMS"],
-    desc: "MTB coaching & tour platform with personal experiences from beginner courses to secret trails in Tyrol.",
+    desc: "MTB-Coaching- & Tourenplattform mit pers\u00f6nlichen Erlebnissen von Anf\u00e4ngerkursen bis zu Geheimtrails in Tirol.",
     img: "/images/home/mike-mockup.webp",
     url: "https://mosti.tirol/src/guiding.html",
     color: "#0d1f0d",
@@ -171,7 +171,7 @@ const setCardRef = (
 
     <HomeComponentsTextReveal>
       <a class="flex items-center gap-1 group" href="/work">
-        <span class="text-[clamp(20px,1.5vw,32px)] font-medium">See all</span>
+        <span class="text-[clamp(20px,1.5vw,32px)] font-medium">Alle ansehen</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

@@ -37,7 +37,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="marquee-root">
-    <div class="marquee-inner" ref="trackRef">
+    <div ref="trackRef" class="marquee-inner">
       <div v-for="copy in 3" :key="copy" class="marquee-set">
         <span v-for="(item, i) in baseItems" :key="i" class="marquee-item" :class="{ 'marquee-item--dot': item === '·' }">{{ item }}</span>
       </div>
