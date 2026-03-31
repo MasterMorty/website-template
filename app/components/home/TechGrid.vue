@@ -14,14 +14,14 @@ const techItems = [
     url: "https://vuejs.org",
   },
   {
+    src: "/images/svg/rust-logo.svg",
+    alt: "Rust",
+    url: "https://www.rust-lang.org",
+  },
+  {
     src: "/images/svg/nuxt-logo.svg",
     alt: "Nuxt",
     url: "https://nuxt.com",
-  },
-  {
-    src: "/images/svg/angular-logo.svg",
-    alt: "Angular",
-    url: "https://angular.dev",
   },
   {
     src: "/images/svg/typescript-logo.svg",
@@ -29,19 +29,19 @@ const techItems = [
     url: "https://www.typescriptlang.org",
   },
   {
-    src: "/images/svg/rust-logo.svg",
-    alt: "Rust",
-    url: "https://www.rust-lang.org",
-  },
-  {
-    src: "/images/svg/motion.svg",
-    alt: "Motion",
-    url: "https://motion.dev",
+    src: "/images/svg/laravel-logo.svg",
+    alt: "Laravel",
+    url: "https://laravel.com",
   },
   {
     src: "/images/svg/tailwindcss-logo.svg",
     alt: "Tailwind CSS",
     url: "https://tailwindcss.com",
+  },
+  {
+    src: "/images/svg/motion.svg",
+    alt: "Motion",
+    url: "https://motion.dev",
   },
   {
     src: "/images/svg/figma-logo.svg",

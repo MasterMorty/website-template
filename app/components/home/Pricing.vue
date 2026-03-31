@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 const tiers = [
   {
     name: "Spark",
-    price: "1.000",
+    price: "1.700",
     period: "per project",
     tagline: "One deliverable, full focus.",
     features: [
@@ -19,7 +19,7 @@ const tiers = [
   },
   {
     name: "Studio",
-    price: "4.500",
+    price: "6.500",
     period: "per project",
     tagline: "The full novafox experience.",
     features: [

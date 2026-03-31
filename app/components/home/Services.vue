@@ -67,13 +67,16 @@
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
               >
                 <HomeComponentsTextReveal :delay="0.1">
-                  Helping others uncover their brand's purpose
+                  Helping others uncover their brand's 
                 </HomeComponentsTextReveal>
                 <HomeComponentsTextReveal :delay="0.14">
-                  and uniqueness – and the game plan to deliver
+                  purpose and uniqueness – and the 
                 </HomeComponentsTextReveal>
                 <HomeComponentsTextReveal :delay="0.18">
-                  it to win their customers' devotion.
+                  game plan to deliver it to win their
+                </HomeComponentsTextReveal>
+                <HomeComponentsTextReveal :delay="0.22">
+                  customers' devotion.
                 </HomeComponentsTextReveal>
               </p>
 
