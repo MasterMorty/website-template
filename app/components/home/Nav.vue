@@ -1,16 +1,145 @@
 <script setup lang="ts">
-import { motion, stagger, useScroll } from "motion-v";
+import { motion, stagger, useScroll, animate, type PanInfo } from "motion-v";
 
 const { scrollYProgress: pageScrollProgress } = useScroll();
 const isMoved = ref(false);
+const mobileMenuOpen = ref(false);
+const controls = useDragControls();
+const dragProgress = useMotionValue(0);
+const menuY = useMotionValue(0);
+const backdropOpacity = useMotionValue(0);
+const menuCloseDragThreshold = 200;
+let dragProgressAnimation: ReturnType<typeof animate> | null = null;
+let menuAnimation: ReturnType<typeof animate> | null = null;
+let backdropAnimation: ReturnType<typeof animate> | null = null;
+
+const dragProgressWidth = useTransform(
+  dragProgress,
+  (value) => `${value * 100}%`,
+);
+
+const stopDragProgressAnimation = () => {
+  dragProgressAnimation?.stop();
+  dragProgressAnimation = null;
+};
+
+const stopMenuAnimation = () => {
+  menuAnimation?.stop();
+  menuAnimation = null;
+};
+
+const stopBackdropAnimation = () => {
+  backdropAnimation?.stop();
+  backdropAnimation = null;
+};
+
+const getMenuHiddenY = () => {
+  if (!import.meta.client) {
+    return 1000;
+  }
+
+  return window.innerHeight + 120;
+};
 
 const unsubscribeScroll = pageScrollProgress.on("change", (value) => {
   isMoved.value = value >= 0.05;
 });
 
 onBeforeUnmount(() => {
+  stopBackdropAnimation();
+  stopMenuAnimation();
+  stopDragProgressAnimation();
   unsubscribeScroll();
 });
+
+function openMenu() {
+  stopBackdropAnimation();
+  stopMenuAnimation();
+  stopDragProgressAnimation();
+  dragProgress.set(0);
+
+  menuY.set(getMenuHiddenY());
+  backdropOpacity.set(0);
+  mobileMenuOpen.value = true;
+
+  nextTick(() => {
+    requestAnimationFrame(() => {
+      menuAnimation = animate(menuY, 0, {
+        duration: 0.38,
+        ease: [0.16, 1, 0.3, 1],
+      });
+      backdropAnimation = animate(backdropOpacity, 1, {
+        duration: 0.26,
+        ease: "linear",
+      });
+    });
+  });
+}
+
+function closeMenu() {
+  if (!mobileMenuOpen.value) {
+    return;
+  }
+
+  stopBackdropAnimation();
+  stopMenuAnimation();
+  stopDragProgressAnimation();
+  dragProgress.set(0);
+
+  menuAnimation = animate(menuY, getMenuHiddenY(), {
+    duration: 0.34,
+    ease: [0.4, 0, 1, 1],
+  });
+  backdropAnimation = animate(backdropOpacity, 0, {
+    duration: 0.22,
+    ease: "linear",
+  });
+
+  setTimeout(() => {
+    mobileMenuOpen.value = false;
+    backdropOpacity.set(0);
+  }, 340);
+}
+
+const dragHandle = {
+  start: {
+    width: 60,
+  },
+};
+
+const onDrag = (_event: PointerEvent, info: PanInfo) => {
+  stopDragProgressAnimation();
+  const progress = Math.min(
+    Math.max(info.offset.y / menuCloseDragThreshold, 0),
+    1,
+  );
+  dragProgress.set(progress);
+};
+
+const onDragEnd = (_event: PointerEvent, info: PanInfo) => {
+  if (info.offset.y >= menuCloseDragThreshold) {
+    closeMenu();
+    return;
+  }
+
+  stopDragProgressAnimation();
+  dragProgressAnimation = animate(dragProgress, 0, {
+    duration: 0.2,
+    ease: "linear",
+  });
+};
+
+const menuNavItems = [
+  { href: "#services", label: "Service" },
+  { href: "#work", label: "My Work" },
+  { href: "#pricing", label: "Preis" },
+  { href: "mailto:info@novafox.at", label: "Kontakt" },
+];
+
+const menuItemDelayBase = 0.16;
+const menuItemDelayStep = 0.08;
+const footerStartDelay =
+  menuItemDelayBase + (menuNavItems.length - 1) * menuItemDelayStep + 0.08;
 
 const circle = {
   initial: {
@@ -88,6 +217,13 @@ const logo = {
   moved: { ...novafox.moved },
   initial: { ...novafox.initial },
 };
+
+const footerIconDelay = (index: number, total: number) => {
+  const centerIndex = Math.floor(total / 2);
+  return footerStartDelay + Math.abs(index - centerIndex) * 0.08;
+};
+
+const footerTextDelay = footerStartDelay + 0.16;
 </script>
 
 <template>
@@ -143,8 +279,9 @@ const logo = {
           <motion.span :variants="novafox"> novafox </motion.span>
         </motion.div>
       </motion.div>
+      <!-- Desktop nav -->
       <div
-        class="h-fit inline-flex gap-4 lg:gap-8 col-span-6 text-[clamp(16px,1.2vw,20px)]"
+        class="h-fit hidden lg:inline-flex gap-4 lg:gap-8 col-span-6 text-[clamp(16px,1.2vw,20px)]"
       >
         <HomeComponentsTextReveal :delay="0.8" :duration="1">
           <HomeComponentsButton href="#services" label="Services" />
@@ -159,7 +296,7 @@ const logo = {
           <HomeComponentsButton href="#pricing" label="Preise" />
         </HomeComponentsTextReveal>
       </div>
-      <div class="inline-flex items-center">
+      <div class="hidden lg:inline-flex items-center">
         <HomeComponentsTextReveal :delay="1.2" :duration="1">
           <div class="h-fit flex items-center text-[clamp(16px,1.2vw,20px)]">
             <HomeComponentsButton href="/login" label="Login" />
@@ -178,6 +315,174 @@ const logo = {
           <HomeComponentsFollowMouseButton label="Kontakt" />
         </motion.div>
       </div>
+
+      <!-- Mobile menu button -->
+      <motion.button
+        class="lg:hidden ml-auto cursor-pointer bg-[#171717] text-white px-4 py-1.5 rounded-full text-sm font-medium"
+        :initial="{ y: 20, opacity: 0 }"
+        :while-in-view="{ y: 0, opacity: 1 }"
+        :in-view-options="{ once: true }"
+        :transition="{
+          delay: 0.8,
+          duration: 1,
+          ease: [0.16, 1, 0.3, 1],
+        }"
+        @click="openMenu"
+      >
+        MENÜ
+      </motion.button>
     </div>
+
+    <!-- Mobile menu dialog -->
+    <Teleport to="body">
+      <div v-if="mobileMenuOpen" class="fixed inset-0 z-90">
+        <motion.div
+          class="fixed inset-0 z-10 flex justify-center items-end p-0 m-0 bg-transparent overflow-visible"
+          :style="{ y: menuY }"
+          drag="y"
+          :drag-listener="false"
+          :drag-controls="controls"
+          drag-direction-lock
+          :drag-constraints="{ top: 0, bottom: 0 }"
+          :drag-transition="{ bounceStiffness: 500, bounceDamping: 15 }"
+          :drag-elastic="{ top: 0, right: 0, bottom: 0.2, left: 0 }"
+          :while-drag="{ cursor: 'grabbing' }"
+          @drag="onDrag"
+          @drag-end="onDragEnd"
+          @pointerdown.self="closeMenu"
+        >
+          <div
+            class="relative z-1 w-full m-6 max-h-[85vh] bg-[#fafaf8] rounded-3xl flex flex-col will-change-transform touch-none"
+          >
+            <!-- Drag handle -->
+            <motion.div
+              class="flex justify-center pt-3"
+              style="touch-action: none"
+              while-press="start"
+              @pointerdown="(event) => controls.start(event)"
+            >
+              <motion.span
+                class="w-10 h-1 bg-gray-300 rounded-full"
+                :variants="dragHandle"
+              >
+                <motion.span
+                  class="block h-1 rounded-full bg-neutral-900"
+                  :style="{
+                    width: dragProgressWidth,
+                    opacity: dragProgressWidth,
+                  }"
+                />
+              </motion.span>
+            </motion.div>
+
+            <!-- Nav content -->
+            <div
+              class="flex-1 overflow-y-auto flex items-center justify-center mt-10"
+            >
+              <nav class="menu-nav">
+                <ul
+                  class="list-none p-0 m-0 flex flex-col items-center gap-6 overflow-hidden"
+                >
+                  <motion.li
+                    v-for="(item, index) in menuNavItems"
+                    :key="item.href"
+                    :initial="{ opacity: 0, scale: 1.1, y: 20 }"
+                    :while-in-view="{ opacity: 1, scale: 1, y: 0 }"
+                    :transition="{
+                      delay: menuItemDelayBase + index * menuItemDelayStep,
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 20,
+                    }"
+                  >
+                    <a
+                      :href="item.href"
+                      class="menu-nav-button"
+                      @click="closeMenu"
+                    >
+                      <span>
+                        <span class="">
+                          {{ item.label }}
+                        </span>
+                      </span>
+                    </a>
+                  </motion.li>
+                </ul>
+              </nav>
+            </div>
+
+            <!-- Footer -->
+            <div class="grid w-full grid-cols-3 py-5 px-7 text-black mt-5">
+              <motion.p
+                class="text-xs font-light text-left"
+                :initial="{ opacity: 0, y: 8 }"
+                :while-in-view="{ opacity: 1, y: 0 }"
+                :transition="{
+                  delay: footerTextDelay,
+                  duration: 0.2,
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 20,
+                }"
+              >
+                novafox
+              </motion.p>
+              <div class="flex justify-center gap-3">
+                <motion.svg
+                  v-for="i in [1, 2, 3]"
+                  :key="i"
+                  viewBox="0 0 46 46"
+                  fill="currentColor"
+                  class="size-4 self-center"
+                  :initial="{ opacity: 0, scale: 0.85, y: 20 }"
+                  :while-in-view="{ opacity: 1, scale: 1, y: 0 }"
+                  :transition="{
+                    delay: footerIconDelay(i - 1, 3),
+                    duration: 0.18,
+                    type: 'spring',
+                    stiffness: 300,
+                    damping: 20,
+                  }"
+                >
+                  <path
+                    d="M23 46C24.4999 46 25.7292 44.8969 25.9374 43.3357C27.9999 29.4317 29.896 27.4959 43.2708 25.9765C44.8126 25.789 46 24.4987 46 23C46 21.4806 44.8333 20.2317 43.2918 20.0028C30.0001 18.1502 28.3541 16.5267 25.9374 2.64345C25.6666 1.10317 24.4792 0 23 0C21.4791 0 20.2708 1.10317 20.0209 2.66426C18.0001 16.5476 16.104 18.4834 2.75 20.0028C1.16668 20.211 0 21.4599 0 23C0 24.4987 1.12499 25.7476 2.70834 25.9765C16.0209 27.8705 17.6459 29.4733 20.0209 43.3564C20.3334 44.9176 21.5418 46 23 46Z"
+                  />
+                </motion.svg>
+              </div>
+              <motion.p
+                class="text-xs font-light text-right"
+                :initial="{ opacity: 0, y: 8 }"
+                :while-in-view="{ opacity: 1, y: 0 }"
+                :transition="{
+                  delay: footerTextDelay,
+                  duration: 0.2,
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 20,
+                }"
+              >
+                {{ new Date().getFullYear() }}
+              </motion.p>
+            </div>
+          </div>
+        </motion.div>
+        <motion.span
+          class="backdrop-blur-sm cursor-no-drop absolute inset-0 z-0 bg-[color-mix(in_hsl,black,transparent_82%)]"
+          :style="{ opacity: backdropOpacity }"
+        >
+          <span class="menu_backdrop-noise" />
+        </motion.span>
+      </div>
+    </Teleport>
   </header>
 </template>
+
+<style>
+.menu_backdrop-noise {
+  background-image: url(/images/svg/background_noise.svg);
+  background-position: 0 0;
+  background-size: 0.5rem 0.5rem;
+  position: absolute;
+  inset: 0%;
+}
+</style>

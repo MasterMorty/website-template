@@ -9,17 +9,21 @@ const projects = [
     tags: ["UI Design", "Development", "AI"],
     desc: "KI-gestützte Volleyball-Wertung mit Gestensteuerung und Live-Kommentar. Computer Vision trifft Sport.",
     img: "/images/home/volleye_icon.jpg",
+    logo: "https://cdn.novafox.at/projects/019d3904-9a7b-7684-9b1c-5ce316eab8fc/media/019d4f03-498d-7791-95f1-74f28ec284e6.webp",
     url: "https://portfolio.fh-salzburg.ac.at/projects/2025-volleye",
     color: "#1a1a2e",
+    date: "2025",
   },
   {
     num: "02",
-    name: "mosti.tirol",
+    name: "Bikesport Bichler",
     tags: ["Web Design", "Web Development", "CMS"],
-    desc: "MTB-Coaching- & Tourenplattform mit pers\u00f6nlichen Erlebnissen von Anf\u00e4ngerkursen bis zu Geheimtrails in Tirol.",
-    img: "/images/home/mike-mockup.webp",
-    url: "https://mosti.tirol/src/guiding.html",
+    desc: "Relaunch der Webseite für den österreichischen Fahrrad- und E-Bike-Händler Bikesport Bichler. Modernes Design trifft auf benutzerfreundliche Funktionalität.",
+    img: "https://cdn.novafox.at/projects/019d3904-9a7b-7684-9b1c-5ce316eab8fc/media/019d5383-92b1-7f4a-80ed-09a75f1a26fc.webp",
+    logo: "https://cdn.novafox.at/projects/019d3904-9a7b-7684-9b1c-5ce316eab8fc/media/019d4f02-0b02-7236-a7e9-c8a39175b0ce.png",
+    url: "https://bikesportbichler.at",
     color: "#0d1f0d",
+    date: "2026",
   },
 ];
 
@@ -113,13 +117,13 @@ const setCardRef = (
             <div class="flex justify-between items-center w-full relative">
               <div class="flex items-center gap-2 lg:gap-3">
                 <img
-                  :src="project.img"
+                  :src="project.logo"
                   :alt="project.name"
                   loading="lazy"
                   width="32"
                   height="32"
                   decoding="async"
-                  class="w-6 h-6 lg:w-8 lg:h-8 rounded-full"
+                  class="w-6 h-6 lg:w-8 lg:h-8 rounded-full object-contain"
                 >
                 <p
                   class="text-[clamp(14px,1.2vw,18px)] uppercase font-semibold text-neutral-100 tracking-wide"
@@ -136,7 +140,7 @@ const setCardRef = (
                 <p
                   class="text-[clamp(14px,1.2vw,18px)] uppercase font-semibold text-neutral-300 tracking-wide"
                 >
-                  2025
+                  {{ project.date }}
                 </p>
               </div>
             </div>

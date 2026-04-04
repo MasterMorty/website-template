@@ -108,11 +108,11 @@ onBeforeUnmount(() => {
           </div>
         </HomeComponentsTextReveal>
         <HomeComponentsTextReveal :delay="0.3" :duration="1" class="w-full">
-          <div>
+          <div class="flex justify-center">
             <img
               :src="'/images/home/better.svg'"
               alt="Engineer"
-              class="w-full pointer-events-none"
+              class="h-[15vw] md:h-[16vw] lg:h-[17vw]"
             >
           </div>
         </HomeComponentsTextReveal>

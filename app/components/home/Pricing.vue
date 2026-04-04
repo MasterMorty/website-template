@@ -51,6 +51,7 @@ const tiers = [
 ];
 
 const gridRef = ref<HTMLElement | null>(null);
+const isDesktop = useMediaQuery("(min-width: 1024px)");
 
 onMounted(() => {
   if (!gridRef.value) return;
@@ -91,6 +92,7 @@ onMounted(() => {
           </HomeComponentsTextReveal>
 
           <p
+            v-if="isDesktop"
             class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
           >
             <HomeComponentsTextReveal :delay="0.1">
@@ -104,6 +106,26 @@ onMounted(() => {
             </HomeComponentsTextReveal>
             <HomeComponentsTextReveal :delay="0.25">
               den Preis.
+            </HomeComponentsTextReveal>
+          </p>
+          <p
+            v-else
+            class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
+          >
+            <HomeComponentsTextReveal :delay="0.1">
+              Transparente Investition, keine
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.15">
+              Überraschungen. Jedes Projekt
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.2">
+              erhält die gleiche obsessive
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.25">
+              Hingabe zum Handwerk, der
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.3">
+              Umfang bestimmt den Preis.
             </HomeComponentsTextReveal>
           </p>
         </div>

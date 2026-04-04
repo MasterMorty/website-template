@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useMediaQuery } from "~/composables/useMediaQuery";
+
+const isDesktop = useMediaQuery("(min-width: 1024px)");
+</script>
 
 <template>
   <section id="services" class="px-2 lg:px-4 py-16 lg:py-24">
@@ -15,11 +19,13 @@
               Services
             </h2>
           </HomeComponentsTextReveal>
+          <!-- Desktop -->
           <p
-            class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
+            v-if="isDesktop"
+            class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.05]"
           >
             <HomeComponentsTextReveal :delay="0.1">
-              Mit jedem Projekt entwickle ich mich weiter -
+              Mit jedem Projekt entwickle ich mich weiter.
             </HomeComponentsTextReveal>
             <HomeComponentsTextReveal :delay="0.15">
               Mein Prozess vereint Design, Entwicklung und
@@ -31,6 +37,33 @@
               Umsetzung für jedes Projekt in Einklang zu
             </HomeComponentsTextReveal>
             <HomeComponentsTextReveal :delay="0.3">
+              bringen.
+            </HomeComponentsTextReveal>
+          </p>
+          <!-- Mobile -->
+          <p
+            v-else
+            class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1]"
+          >
+            <HomeComponentsTextReveal :delay="0.1">
+              Mit jedem Projekt entwickle ich
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.15">
+              mich weiter. Mein Prozess
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.2">
+              vereint Design, Entwicklung
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.25">
+               und Markenstrategie - mit dem
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.3">
+              Ziel, Vision und Umsetzung für
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.35">
+              jedes Projektin Einklang zu
+            </HomeComponentsTextReveal>
+            <HomeComponentsTextReveal :delay="0.4">
               bringen.
             </HomeComponentsTextReveal>
           </p>
@@ -123,9 +156,9 @@
                 class="h-55 sm:h-100 md:h-112.5 lg:h-[clamp(220px,15vw,360px)] rounded-lg relative"
               >
                 <img
-                  :src="'https://cdn.novafox.at/projects/019d3904-9a7b-7684-9b1c-5ce316eab8fc/media/019d3b6b-e4c7-7768-9cca-8e239689596d.png'"
+                  :src="'https://cdn.novafox.at/projects/019d3904-9a7b-7684-9b1c-5ce316eab8fc/media/019d4ef4-e0fe-7fdc-bb5b-745778163a5d.png'"
                   alt="Markenstrategie"
-                  class="absolute inset-0 top-2 w-full h-full object-cover"
+                  class="absolute inset-0 top-2 w-full h-full object-contain"
                 >
               </div>
             </div>

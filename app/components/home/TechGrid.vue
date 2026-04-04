@@ -50,6 +50,8 @@ const techItems = [
   },
 ];
 
+const isDesktop = useMediaQuery("(min-width: 1024px)");
+
 const gridRef = ref<HTMLElement>();
 const itemRefs = ref<Array<HTMLElement | null>>([]);
 
@@ -124,11 +126,7 @@ function getItemRect(index: number) {
   };
 }
 
-function getClosestEdge(
-  clientX: number,
-  clientY: number,
-  rect: DOMRect,
-): Edge {
+function getClosestEdge(clientX: number, clientY: number, rect: DOMRect): Edge {
   const distances: Record<Edge, number> = {
     top: Math.abs(clientY - rect.top),
     right: Math.abs(clientX - rect.right),
@@ -344,9 +342,7 @@ function onHoverAnimationComplete() {
   <section id="tech" class="px-4 lg:px-8 py-16 lg:py-28">
     <!-- Header -->
     <div class="lg:grid lg:grid-cols-12 gap-24 mb-16 lg:mb-20">
-      <div
-        class="flex flex-col col-span-12 lg:col-span-10 lg:col-start-3"
-      >
+      <div class="flex flex-col col-span-12 lg:col-span-10 lg:col-start-3">
         <HomeComponentsTextReveal>
           <h2
             class="text-xs lg:text-[clamp(14px,0.8vw,18px)] text-[#8b7b63] uppercase font-medium tracking-wider mb-2"
@@ -356,16 +352,34 @@ function onHoverAnimationComplete() {
         </HomeComponentsTextReveal>
 
         <p
+          v-if="isDesktop"
           class="text-[#1f2937] text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
         >
           <HomeComponentsTextReveal :delay="0.1">
             Basierend auf skalierbaren Tools - gezielt
           </HomeComponentsTextReveal>
           <HomeComponentsTextReveal :delay="0.15">
-             gewählt für Präzision, Performance und kreativen
+            gewählt für Präzision, Performance und kreativen
           </HomeComponentsTextReveal>
           <HomeComponentsTextReveal :delay="0.2">
-             Spielraum.
+            Spielraum.
+          </HomeComponentsTextReveal>
+        </p>
+        <p
+          v-else
+          class="text-[#1f2937] text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
+        >
+          <HomeComponentsTextReveal :delay="0.1">
+            Basierend auf skalierbaren Tools -
+          </HomeComponentsTextReveal>
+          <HomeComponentsTextReveal :delay="0.15">
+            gezielt gewählt für Präzision,
+          </HomeComponentsTextReveal>
+          <HomeComponentsTextReveal :delay="0.2">
+            Performance und kreativen
+          </HomeComponentsTextReveal>
+          <HomeComponentsTextReveal :delay="0.25">
+            Spielraum.
           </HomeComponentsTextReveal>
         </p>
       </div>
@@ -454,8 +468,7 @@ function onHoverAnimationComplete() {
   background: transparent;
   box-shadow: inset 0 0 0 1px rgba(80, 69, 51, 0.12);
   text-decoration: none;
-  transition:
-    box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
   backface-visibility: hidden;
   will-change: box-shadow;
 }
