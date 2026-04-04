@@ -5,6 +5,7 @@ on:
     branches: [ "feature/headless_cms" ]
   pull_request:
     branches: [ "feature/headless_cms" ]
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
