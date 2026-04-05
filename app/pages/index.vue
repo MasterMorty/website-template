@@ -1,8 +1,8 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: "novafox – Digital. Wild. Exceptional.",
+  title: "novafox - Your brand deserves better.",
   description:
-    "novafox \u2013 Ein Design- & Entwicklungsstudio, das au\u00dfergew\u00f6hnliche digitale Erlebnisse f\u00fcr ambitionierte Marken schafft.",
+    "novafox - Ein Design- & Entwicklungsstudio, das außergewöhnliche digitale Erlebnisse für ambitionierte Marken schafft.",
 });
 </script>
 
