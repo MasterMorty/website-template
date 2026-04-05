@@ -52,13 +52,13 @@ onBeforeUnmount(() => {
   border-bottom: 1px solid #e5e5e0;
   padding: 1rem 0;
   background: #fafaf8;
-  will-change: transform;
 }
 
 .marquee-inner {
   display: flex;
   white-space: nowrap;
   width: max-content;
+  will-change: transform;
 }
 
 .marquee-set {

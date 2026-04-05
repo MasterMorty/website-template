@@ -161,7 +161,7 @@ const setCardRef = (
     </ul>
 
     <HomeComponentsTextReveal>
-      <NuxtLink class="flex items-center gap-1 group" to="/work">
+      <NuxtLink class="flex items-center gap-1 group text-neutral-600/75 hover:text-neutral-600 transition-colors" to="/work">
         <span class="text-[clamp(20px,1.5vw,32px)] font-medium"
           >Alle ansehen</span
         >

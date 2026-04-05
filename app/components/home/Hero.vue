@@ -8,7 +8,7 @@ import {
   useMotionValue,
 } from "motion-v";
 
-const { scrollYProgress: pageScrollProgress } = useScroll();
+const { scrollYProgress: pageScrollProgress } = useSharedPageScroll();
 const gifOpacity = useTransform(pageScrollProgress, [0, 0.1], [1, 0]);
 const viewportHeight = useMotionValue(900);
 const viewportWidth = useMotionValue(1440);
@@ -314,7 +314,7 @@ onBeforeUnmount(() => {
         />
       </motion.div>
       <button
-        class="absolute bottom-8 right-8 z-10 scale-0 group-hover:scale-100 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform"
+        class="absolute bottom-8 right-8 z-10 scale-0 group-hover:scale-100 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
         aria-label="Unmute video"
         role="button"
       >

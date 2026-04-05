@@ -17,7 +17,7 @@ const bigTextY = useTransform(scrollYProgress, [0, 1], ["-12vh", "8vh"]);
   <section style="background: #f5f5f0;">
     <div ref="wrapRef" class="relative py-8 px-2 md:pt-16 md:px-4 md:pb-4 overflow-hidden">
       <motion.h2
-        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-bold whitespace-nowrap pointer-events-none z-0"
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-bold whitespace-nowrap pointer-events-none z-0 will-change-transform"
         :style="{ fontSize: 'clamp(6rem, 14vw, 18rem)', color: '#0a0a0a', letterSpacing: '-0.04em', y: bigTextY }"
       >
         novafox

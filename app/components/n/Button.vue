@@ -330,7 +330,6 @@ defineExpose({
   transition-property: opacity, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
-  will-change: opacity, transform;
 }
 
 .n-button-background:hover:not(.n-button-no-hover):not(:disabled)::before {

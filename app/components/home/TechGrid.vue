@@ -66,11 +66,13 @@ const hoverRect = ref<{
   height: number;
 } | null>(null);
 
+// Width/height are set instantly (not animated) to avoid layout thrashing
+const hoverWidth = ref(0);
+const hoverHeight = ref(0);
+
 const hoverInitial = ref({
   x: 0,
   y: 0,
-  width: 0,
-  height: 0,
   scaleX: 1,
   scaleY: 1,
   originX: 0.5,
@@ -81,8 +83,6 @@ const hoverInitial = ref({
 const hoverExit = ref({
   x: 0,
   y: 0,
-  width: 0,
-  height: 0,
   scaleX: 1,
   scaleY: 1,
   originX: 0.5,
@@ -93,8 +93,6 @@ const hoverExit = ref({
 const hoverAnimate = ref({
   x: 0,
   y: 0,
-  width: 0,
-  height: 0,
   scaleX: 1,
   scaleY: 1,
   originX: 0.5,
@@ -150,12 +148,14 @@ function getEnterState(
   rect: { x: number; y: number; width: number; height: number },
   edge: Edge,
 ) {
+  // Set dimensions instantly (no animation = no layout thrashing)
+  hoverWidth.value = rect.width;
+  hoverHeight.value = rect.height;
+
   if (edge === "top") {
     return {
       x: rect.x,
       y: rect.y,
-      width: rect.width,
-      height: rect.height,
       scaleX: 1,
       scaleY: 0,
       originX: 0.5,
@@ -168,8 +168,6 @@ function getEnterState(
     return {
       x: rect.x,
       y: rect.y,
-      width: rect.width,
-      height: rect.height,
       scaleX: 1,
       scaleY: 0,
       originX: 0.5,
@@ -182,8 +180,6 @@ function getEnterState(
     return {
       x: rect.x,
       y: rect.y,
-      width: rect.width,
-      height: rect.height,
       scaleX: 0,
       scaleY: 1,
       originX: 0,
@@ -195,8 +191,6 @@ function getEnterState(
   return {
     x: rect.x,
     y: rect.y,
-    width: rect.width,
-    height: rect.height,
     scaleX: 0,
     scaleY: 1,
     originX: 1,
@@ -212,8 +206,6 @@ function getExitState(
   const base = {
     x: rect.x,
     y: rect.y,
-    width: rect.width,
-    height: rect.height,
     opacity: 1,
   };
 
@@ -250,11 +242,11 @@ function activateItem(index: number, event: MouseEvent) {
 
   hoverExiting.value = false;
   hoverRect.value = rect;
+  hoverWidth.value = rect.width;
+  hoverHeight.value = rect.height;
   hoverAnimate.value = {
     x: rect.x,
     y: rect.y,
-    width: rect.width,
-    height: rect.height,
     scaleX: 1,
     scaleY: 1,
     originX: 0.5,
@@ -369,13 +361,12 @@ function onHoverAnimationComplete() {
         v-if="hoverVisible"
         :key="`hover-${hoverKey}`"
         class="tech-hover-bg"
+        :style="{ width: `${hoverWidth}px`, height: `${hoverHeight}px` }"
         :initial="hoverInitial"
         :animate="hoverAnimate"
         :transition="{
           x: { type: 'spring', stiffness: 500, damping: 42, mass: 0.55 },
           y: { type: 'spring', stiffness: 500, damping: 42, mass: 0.55 },
-          width: { type: 'spring', stiffness: 500, damping: 42, mass: 0.55 },
-          height: { type: 'spring', stiffness: 500, damping: 42, mass: 0.55 },
           scaleX: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
           scaleY: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
         }"
@@ -443,7 +434,6 @@ function onHoverAnimationComplete() {
   text-decoration: none;
   transition: box-shadow 0.3s ease;
   backface-visibility: hidden;
-  will-change: box-shadow;
 }
 
 @media (min-width: 1024px) {

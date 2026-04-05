@@ -3,12 +3,11 @@ import {
   motion,
   AnimatePresence,
   stagger,
-  useScroll,
   animate,
   type PanInfo,
 } from "motion-v";
 
-const { scrollYProgress: pageScrollProgress } = useScroll();
+const { scrollYProgress: pageScrollProgress } = useSharedPageScroll();
 const isMoved = ref(false);
 const mobileMenuOpen = ref(false);
 const mobileMenuButtonVisible = ref(false);
@@ -68,7 +67,10 @@ function openMenu() {
   stopDragProgressAnimation();
   dragProgress.set(0);
 
-  menuY.set(getMenuHiddenY());
+  // Read layout values before writing to avoid thrashing
+  const hiddenY = getMenuHiddenY();
+
+  menuY.set(hiddenY);
   backdropOpacity.set(0);
   mobileMenuOpen.value = true;
   mobileMenuButtonVisible.value = true;
