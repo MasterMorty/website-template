@@ -1,42 +1,30 @@
 <script setup lang="ts">
 import { ref, type ComponentPublicInstance } from "vue";
 import { motion, useScroll, useTransform } from "motion-v";
+import { Ticker } from "motion-plus-vue";
 
-const projects = [
-  {
-    num: "01",
-    name: "volleye",
-    tags: ["UI Design", "Development", "AI"],
-    desc: "KI-gestützte Volleyball-Wertung mit Gestensteuerung und Live-Kommentar. Computer Vision trifft Sport.",
-    img: "/images/home/volleye_icon.jpg",
-    logo: "https://cdn.novafox.at/projects/019d3904-9a7b-7684-9b1c-5ce316eab8fc/media/019d4f03-498d-7791-95f1-74f28ec284e6.webp",
-    url: "https://portfolio.fh-salzburg.ac.at/projects/2025-volleye",
-    color: "#1a1a2e",
-    date: "2025",
-  },
-  {
-    num: "02",
-    name: "Bikesport Bichler",
-    tags: ["Web Design", "Web Development", "CMS"],
-    desc: "Relaunch der Webseite für den österreichischen Fahrrad- und E-Bike-Händler Bikesport Bichler. Modernes Design trifft auf benutzerfreundliche Funktionalität.",
-    img: "https://cdn.novafox.at/projects/019d3904-9a7b-7684-9b1c-5ce316eab8fc/media/019d5383-92b1-7f4a-80ed-09a75f1a26fc.webp",
-    logo: "https://cdn.novafox.at/projects/019d3904-9a7b-7684-9b1c-5ce316eab8fc/media/019d4f02-0b02-7236-a7e9-c8a39175b0ce.png",
-    url: "https://bikesportbichler.at",
-    color: "#0d1f0d",
-    date: "2026",
-  },
-];
+const MAX_PROJECTS = 10;
 
-const cardRefs = projects.map(() => ref<HTMLElement | null>(null));
+const { data: projects } = await useAsyncData("home-projects", () =>
+  queryCollection("projects")
+    .where("featured", "=", true)
+    .order("order", "ASC")
+    .all(),
+);
+
+const projectList = computed(() => projects.value ?? []);
+
+// Pre-allocate refs & motion values (composables must be called unconditionally)
+const cardRefs = Array.from({ length: MAX_PROJECTS }, () =>
+  ref<HTMLElement | null>(null),
+);
 
 const cardMotions = cardRefs.map((cardRef) => {
   const { scrollYProgress } = useScroll({
     target: cardRef,
     offset: ["start end", "end start"],
   });
-
   const y = useTransform(scrollYProgress, [0, 1], [-80, 80]);
-
   return { y };
 });
 
@@ -44,7 +32,9 @@ const setCardRef = (
   index: number,
   el: Element | ComponentPublicInstance | null,
 ) => {
-  cardRefs[index]!.value = el as HTMLElement | null;
+  if (index < MAX_PROJECTS) {
+    cardRefs[index]!.value = el as HTMLElement | null;
+  }
 };
 </script>
 
@@ -69,7 +59,7 @@ const setCardRef = (
 
     <ul class="flex flex-col lg:flex-row gap-3 lg:gap-4 w-full mb-8 lg:mb-16">
       <motion.li
-        v-for="(project, index) in projects"
+        v-for="(project, index) in projectList"
         :key="project.num"
         :ref="(el) => setCardRef(index, el)"
         class="w-full lg:w-1/2 group"
@@ -108,7 +98,7 @@ const setCardRef = (
                   loading="lazy"
                   decoding="async"
                   class="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-500 ease-in-out"
-                >
+                />
               </motion.div>
             </div>
           </div>
@@ -124,7 +114,7 @@ const setCardRef = (
                   height="32"
                   decoding="async"
                   class="w-6 h-6 lg:w-8 lg:h-8 rounded-full object-contain"
-                >
+                />
                 <p
                   class="text-[clamp(14px,1.2vw,18px)] uppercase font-semibold text-neutral-100 tracking-wide"
                 >
@@ -135,7 +125,7 @@ const setCardRef = (
                 <p
                   class="text-[clamp(14px,1.2vw,18px)] uppercase font-semibold text-neutral-300 tracking-wide"
                 >
-                  {{ project.tags[0] }}
+                  {{ project.type }}
                 </p>
                 <p
                   class="text-[clamp(14px,1.2vw,18px)] uppercase font-semibold text-neutral-300 tracking-wide"
@@ -155,17 +145,14 @@ const setCardRef = (
                 class="absolute right-0 h-full w-8 lg:w-10 bg-linear-to-l from-neutral-900/95 to-neutral-200/0 z-10"
               />
               <div class="flex overflow-hidden">
-                <p
-                  v-for="copy in 2"
-                  :key="`tags-${index}-${copy}`"
-                  class="text-[10px] md:text-xs tracking-widest text-neutral-300 uppercase whitespace-nowrap pr-1.5"
-                >
+                <Ticker>
                   <span
                     v-for="tag in project.tags"
-                    :key="`p${index}-${copy}-${tag}`"
+                    :key="`p${index}-tag-${tag}`"
+                    class="text-sm font-medium text-neutral-500 uppercase tracking-wide mr-6 last:mr-0"
                     >{{ tag }},
                   </span>
-                </p>
+                </Ticker>
               </div>
             </div>
           </div>
@@ -174,8 +161,10 @@ const setCardRef = (
     </ul>
 
     <HomeComponentsTextReveal>
-      <a class="flex items-center gap-1 group" href="/work">
-        <span class="text-[clamp(20px,1.5vw,32px)] font-medium">Alle ansehen</span>
+      <NuxtLink class="flex items-center gap-1 group" to="/work">
+        <span class="text-[clamp(20px,1.5vw,32px)] font-medium"
+          >Alle ansehen</span
+        >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -192,7 +181,7 @@ const setCardRef = (
           <path d="M5 12h14" />
           <path d="m12 5 7 7-7 7" />
         </svg>
-      </a>
+      </NuxtLink>
     </HomeComponentsTextReveal>
   </section>
 </template>

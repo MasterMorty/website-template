@@ -8,7 +8,10 @@ useSeoMeta({
 
 <template>
   <div class="page-root">
-    <VueLenis root />
+    <VueLenis
+      root
+      :options="{ orientation: 'vertical', gestureOrientation: 'vertical' }"
+    />
     <HomeNav />
     <main class="page-main">
       <HomeHero />

@@ -46,11 +46,11 @@ const bigTextY = useTransform(scrollYProgress, [0, 1], ["-12vh", "8vh"]);
 
       <div class="relative z-10 mt-8 pb-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-gray-400">
         <p>&copy; 2026 novafox. Alle Rechte vorbehalten.</p>
-        <a href="/agb" class="hover:text-gray-600 transition-colors">AGB</a>
+        <NuxtLink to="/agb" class="hover:text-gray-600 transition-colors">AGB</NuxtLink>
         <span aria-hidden="true">|</span>
-        <a href="/imprint" class="hover:text-gray-600 transition-colors">Impressum</a>
+        <NuxtLink to="/imprint" class="hover:text-gray-600 transition-colors">Impressum</NuxtLink>
         <span aria-hidden="true">|</span>
-        <a href="/privacy" class="hover:text-gray-600 transition-colors">Datenschutz</a>
+        <NuxtLink to="/privacy" class="hover:text-gray-600 transition-colors">Datenschutz</NuxtLink>
       </div>
     </div>
   </section>

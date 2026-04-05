@@ -12,10 +12,17 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
 }
 
 body {
   background-color: #fafaf8;
+  overflow-x: clip;
+}
+
+#__nuxt {
+  overflow-x: clip;
 }
 
 /* view-transition for page changes */

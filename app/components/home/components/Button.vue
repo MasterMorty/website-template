@@ -1,12 +1,30 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   href: string;
   label: string;
 }>();
+
+const isInternalRoute = computed(() => {
+  const href = props.href;
+  return href.startsWith("/") && !href.startsWith("//");
+});
 </script>
 
 <template>
-  <a :href="href" class="inline-block overflow-hidden relative z-10">
+  <NuxtLink
+    v-if="isInternalRoute"
+    :to="href"
+    class="inline-block overflow-hidden relative z-10"
+  >
+    <span
+      v-for="(char, index) in label"
+      :key="`${char}-${index}`"
+      class="letter"
+    >
+      {{ char }}
+    </span>
+  </NuxtLink>
+  <a v-else :href="href" class="inline-block overflow-hidden relative z-10">
     <span
       v-for="(char, index) in label"
       :key="`${char}-${index}`"

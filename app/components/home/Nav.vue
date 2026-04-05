@@ -1,9 +1,19 @@
 <script setup lang="ts">
-import { motion, stagger, useScroll, animate, type PanInfo } from "motion-v";
+import {
+  motion,
+  AnimatePresence,
+  stagger,
+  useScroll,
+  animate,
+  type PanInfo,
+} from "motion-v";
 
 const { scrollYProgress: pageScrollProgress } = useScroll();
 const isMoved = ref(false);
 const mobileMenuOpen = ref(false);
+const mobileMenuButtonVisible = ref(false);
+const mobileMenuCircleActive = ref(false);
+const topMenuButtonScale = useMotionValue(1);
 const controls = useDragControls();
 const dragProgress = useMotionValue(0);
 const menuY = useMotionValue(0);
@@ -61,6 +71,8 @@ function openMenu() {
   menuY.set(getMenuHiddenY());
   backdropOpacity.set(0);
   mobileMenuOpen.value = true;
+  mobileMenuButtonVisible.value = true;
+  mobileMenuCircleActive.value = true;
 
   nextTick(() => {
     requestAnimationFrame(() => {
@@ -85,6 +97,8 @@ function closeMenu() {
   stopMenuAnimation();
   stopDragProgressAnimation();
   dragProgress.set(0);
+  mobileMenuButtonVisible.value = false;
+  mobileMenuCircleActive.value = false;
 
   menuAnimation = animate(menuY, getMenuHiddenY(), {
     duration: 0.34,
@@ -93,6 +107,12 @@ function closeMenu() {
   backdropAnimation = animate(backdropOpacity, 0, {
     duration: 0.22,
     ease: "linear",
+  });
+  
+  animate(topMenuButtonScale, [0.95, 1], {
+    type: "spring",
+    stiffness: 340,
+    damping: 8,
   });
 
   setTimeout(() => {
@@ -322,6 +342,7 @@ const footerTextDelay = footerStartDelay + 0.16;
         :initial="{ y: 20, opacity: 0 }"
         :while-in-view="{ y: 0, opacity: 1 }"
         :in-view-options="{ once: true }"
+        :style="{ scale: topMenuButtonScale }"
         :transition="{
           delay: 0.8,
           duration: 1,
@@ -334,8 +355,52 @@ const footerTextDelay = footerStartDelay + 0.16;
     </div>
 
     <!-- Mobile menu dialog -->
-    <Teleport to="body">
+    <Teleport to="header">
       <div v-if="mobileMenuOpen" class="fixed inset-0 z-90 text-[#404040]">
+        <div
+          class="fixed items-center justify-between text-[#404040] left-4 lg:left-8 right-4 lg:right-8 top-4.5 lg:top-6 flex gap-4 lg:gap-8 z-50"
+        >
+          <AnimatePresence>
+            <motion.button
+              v-if="mobileMenuButtonVisible"
+              class="ml-auto w-18.5 bg-[#171717] text-white px-1 py-1.5 text-sm font-medium rounded-md"
+              :initial="{ opacity: 0, scale: 0.95 }"
+              :animate="{ opacity: 1, scale: 1 }"
+              :exit="{ opacity: 0, scale: 0.95 }"
+              :transition="{
+                opacity: { duration: 0.2 },
+                scale: {
+                  type: 'spring',
+                  stiffness: 340,
+                  damping: 8,
+                },
+              }"
+              @click="closeMenu"
+            >
+              ZURÜCK
+            </motion.button>
+            <motion.div
+              class="w-fit rounded-full p-2 bg-[#171717] absolute z-0 cursor-pointer"
+              :variants="circle"
+              initial="initial"
+              :animate="mobileMenuCircleActive ? 'moved' : 'initial'"
+              :transition="{
+                delay: mobileMenuCircleActive ? 0.1 : 0,
+              }"
+            >
+              <svg
+                viewBox="0 0 46 46"
+                fill="currentColor"
+                class="size-4 w-auto object-contain text-white"
+              >
+                <path
+                  d="M23 46C24.4999 46 25.7292 44.8969 25.9374 43.3357C27.9999 29.4317 29.896 27.4959 43.2708 25.9765C44.8126 25.789 46 24.4987 46 23C46 21.4806 44.8333 20.2317 43.2918 20.0028C30.0001 18.1502 28.3541 16.5267 25.9374 2.64345C25.6666 1.10317 24.4792 0 23 0C21.4791 0 20.2708 1.10317 20.0209 2.66426C18.0001 16.5476 16.104 18.4834 2.75 20.0028C1.16668 20.211 0 21.4599 0 23C0 24.4987 1.12499 25.7476 2.70834 25.9765C16.0209 27.8705 17.6459 29.4733 20.0209 43.3564C20.3334 44.9176 21.5418 46 23 46Z"
+                />
+              </svg>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
         <motion.div
           class="fixed inset-0 z-10 flex justify-center items-end p-0 m-0 bg-transparent overflow-visible"
           :style="{ y: menuY }"
@@ -469,20 +534,8 @@ const footerTextDelay = footerStartDelay + 0.16;
         <motion.span
           class="backdrop-blur-sm cursor-no-drop absolute inset-0 z-0 bg-[color-mix(in_hsl,black,transparent_82%)]"
           :style="{ opacity: backdropOpacity }"
-        >
-          <span class="menu_backdrop-noise" />
-        </motion.span>
+        />
       </div>
     </Teleport>
   </header>
 </template>
-
-<style>
-.menu_backdrop-noise {
-  background-image: url(/images/svg/background_noise.svg);
-  background-position: 0 0;
-  background-size: 0.5rem 0.5rem;
-  position: absolute;
-  inset: 0%;
-}
-</style>

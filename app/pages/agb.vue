@@ -162,7 +162,10 @@ const sections = [
 
 <template>
   <div class="imprint-root">
-    <VueLenis root />
+    <VueLenis
+      root
+      :options="{ orientation: 'vertical', gestureOrientation: 'vertical' }"
+    />
 
     <!-- Minimal nav -->
     <header class="fixed top-0 left-0 right-0 z-50 px-4 lg:px-8 pt-4.5 lg:pt-6">

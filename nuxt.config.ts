@@ -17,6 +17,10 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  app: {
+    pageTransition: { name: 'page' },
+  },
+
   css: ['~/assets/css/main.css'],
 
   compatibilityDate: '2024-11-01',

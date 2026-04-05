@@ -72,7 +72,7 @@ onBeforeUnmount(() => {
 <template>
   <!-- Mobile Hero -->
   <section class="h-svh relative px-4 lg:px-8 overflow-x-hidden">
-    <div class="flex flex-col justify-between h-full py-32 lg:hidden">
+    <div class="flex flex-col justify-between h-full pt-32 pb-4 lg:hidden">
       <div class="flex flex-col gap-1">
         <div class="overflow-hidden mb-1 w-full relative">
           <HomeComponentsTextReveal :duration="1">
@@ -114,6 +114,70 @@ onBeforeUnmount(() => {
               alt="Engineer"
               class="h-[15vw] md:h-[16vw] lg:h-[17vw]"
             >
+          </div>
+        </HomeComponentsTextReveal>
+      </div>
+
+      <div class="flex items-end justify-between text-[#404040]">
+        <HomeComponentsTextReveal :delay="0.45" :duration="1">
+          <div class="flex items-center gap-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="w-4 h-4 text-neutral-900"
+              aria-hidden="true"
+            >
+              <path d="M12 5v14" />
+              <path d="m19 12-7 7-7-7" />
+            </svg>
+            <p class="text-sm font-medium">Mehr</p>
+          </div>
+        </HomeComponentsTextReveal>
+
+        <motion.img
+          :src="'/images/home/scroll_down_anim.gif'"
+          loading="eager"
+          width="28"
+          height="28"
+          alt=""
+          fetchpriority="high"
+          class="hero_footer-img"
+          :style="{ opacity: gifOpacity }"
+          :initial="{ opacity: 0, y: 12 }"
+          :while-in-view="{ y: 0, opacity: 1 }"
+          :in-view-options="{ once: true }"
+          :transition="{
+            delay: 0.55,
+            ease: [0.16, 1, 0.3, 1],
+          }"
+        />
+
+        <HomeComponentsTextReveal :delay="0.5" :duration="1">
+          <div class="flex items-center gap-1">
+            <p class="text-sm font-medium">entdecken</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="w-4 h-4 text-neutral-900"
+              aria-hidden="true"
+            >
+              <path d="M12 5v14" />
+              <path d="m19 12-7 7-7-7" />
+            </svg>
           </div>
         </HomeComponentsTextReveal>
       </div>

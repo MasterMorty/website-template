@@ -7,7 +7,10 @@ const { data: page } = await useAsyncData(route.path, () => {
   return queryCollection('hubPages').path(route.path).first()
 })
 
-definePageMeta({ layout: 'auth' })
+definePageMeta({
+  layout: 'auth',
+  pageTransition: false,
+})
 
 useSeoMeta({ title: page.value?.title, description: page.value?.description })
 </script>

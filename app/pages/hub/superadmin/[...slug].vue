@@ -2,6 +2,7 @@
 definePageMeta({
   layout: 'auth',
   middleware: ['hub-role'],
+  pageTransition: false,
 })
 
 const route = useRoute()
