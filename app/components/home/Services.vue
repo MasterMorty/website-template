@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useMediaQuery } from "~/composables/useMediaQuery";
-
-const isDesktop = useMediaQuery("(min-width: 1024px)");
 </script>
 
 <template>
@@ -19,54 +16,12 @@ const isDesktop = useMediaQuery("(min-width: 1024px)");
               Services
             </h2>
           </HomeComponentsTextReveal>
-          <!-- Desktop -->
-          <p
-            v-if="isDesktop"
+          <HomeComponentsTextRevealLines
+            text="Mit jedem Projekt entwickle ich mich weiter. Mein Prozess vereint Design, Entwicklung und Markenstrategie - mit dem Ziel, Vision und Umsetzung für jedes Projekt in Einklang zu bringen."
             class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.05]"
-          >
-            <HomeComponentsTextReveal :delay="0.1">
-              Mit jedem Projekt entwickle ich mich weiter.
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.15">
-              Mein Prozess vereint Design, Entwicklung und
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.2">
-              Markenstrategie - mit dem Ziel, Vision und
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.25">
-              Umsetzung für jedes Projekt in Einklang zu
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.3">
-              bringen.
-            </HomeComponentsTextReveal>
-          </p>
-          <!-- Mobile -->
-          <p
-            v-else
-            class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1]"
-          >
-            <HomeComponentsTextReveal :delay="0.1">
-              Mit jedem Projekt entwickle ich
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.15">
-              mich weiter. Mein Prozess
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.2">
-              vereint Design, Entwicklung
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.25">
-               und Markenstrategie - mit dem
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.3">
-              Ziel, Vision und Umsetzung für
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.35">
-              jedes Projektin Einklang zu
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.4">
-              bringen.
-            </HomeComponentsTextReveal>
-          </p>
+            :base-delay="0.1"
+            :stagger="0.05"
+          />
         </div>
       </div>
 
@@ -101,25 +56,12 @@ const isDesktop = useMediaQuery("(min-width: 1024px)");
             <div
               class="flex flex-col gap-4 lg:gap-6 lg:col-span-3 mb-8 lg:mb-0"
             >
-              <p
+              <HomeComponentsTextRevealLines
+                text="Ich helfe dabei, den Kern und die Einzigartigkeit einer Marke zu erkennen und eine klare Strategie zu entwickeln, um Kunden nachhaltig zu begeistern."
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
-              >
-                <HomeComponentsTextReveal :delay="0.1">
-                  Ich helfe dabei, den Kern und die
-                </HomeComponentsTextReveal>
-                <HomeComponentsTextReveal :delay="0.14">
-                  Einzigartigkeit einer Marke zu
-                </HomeComponentsTextReveal>
-                <HomeComponentsTextReveal :delay="0.18">
-                  erkennen und eine klare Strategie zu
-                </HomeComponentsTextReveal>
-                <HomeComponentsTextReveal :delay="0.22">
-                  entwickeln, um Kunden nachhaltig
-                </HomeComponentsTextReveal>
-                <HomeComponentsTextReveal :delay="0.26">
-                  zu begeistern.
-                </HomeComponentsTextReveal>
-              </p>
+                :base-delay="0.1"
+                :stagger="0.04"
+              />
 
               <p
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
@@ -190,22 +132,12 @@ const isDesktop = useMediaQuery("(min-width: 1024px)");
             <div
               class="flex flex-col gap-4 lg:gap-6 lg:col-span-3 mb-8 lg:mb-0"
             >
-              <p
+              <HomeComponentsTextRevealLines
+                text="Gestaltung digitaler Erlebnisse, die Markenstrategie, Kreativität und UX vereinen – für funktionale und benutzerfreundliche Lösungen."
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
-              >
-                <HomeComponentsTextReveal :delay="0.1">
-                  Gestaltung digitaler Erlebnisse, die
-                </HomeComponentsTextReveal>
-                <HomeComponentsTextReveal :delay="0.14">
-                  Markenstrategie, Kreativität und UX
-                </HomeComponentsTextReveal>
-                <HomeComponentsTextReveal :delay="0.18">
-                  vereinen – für funktionale und
-                </HomeComponentsTextReveal>
-                <HomeComponentsTextReveal :delay="0.22">
-                  benutzerfreundliche Lösungen.
-                </HomeComponentsTextReveal>
-              </p>
+                :base-delay="0.1"
+                :stagger="0.04"
+              />
               <p
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
               >
@@ -275,22 +207,12 @@ const isDesktop = useMediaQuery("(min-width: 1024px)");
             <div
               class="flex flex-col gap-4 lg:gap-6 lg:col-span-3 mb-8 lg:mb-0"
             >
-              <p
+              <HomeComponentsTextRevealLines
+                text="Entwicklung digitaler Produkte, die Design, Technologie und Geschäftsstrategie vereinen - für nahtlose Nutzererlebnisse."
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
-              >
-                <HomeComponentsTextReveal :delay="0.1">
-                  Entwicklung digitaler Produkte,
-                </HomeComponentsTextReveal>
-                <HomeComponentsTextReveal :delay="0.14">
-                  die Design, Technologie und
-                </HomeComponentsTextReveal>
-                <HomeComponentsTextReveal :delay="0.18">
-                  Geschäftsstrategie vereinen -
-                </HomeComponentsTextReveal>
-                <HomeComponentsTextReveal :delay="0.22">
-                  für nahtlose Nutzererlebnisse.
-                </HomeComponentsTextReveal>
-              </p>
+                :base-delay="0.1"
+                :stagger="0.04"
+              />
 
               <p
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"

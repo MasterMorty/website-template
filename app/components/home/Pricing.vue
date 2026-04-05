@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { gsap } from "gsap";
+import { motion } from "motion-v";
+
 
 const tiers = [
   {
@@ -49,28 +49,6 @@ const tiers = [
     popular: false,
   },
 ];
-
-const gridRef = ref<HTMLElement | null>(null);
-const isDesktop = useMediaQuery("(min-width: 1024px)");
-
-onMounted(() => {
-  if (!gridRef.value) return;
-  const cards = gridRef.value.querySelectorAll(".pricing-card");
-
-  gsap.set(cards, { y: 60, opacity: 0 });
-
-  gsap.to(cards, {
-    y: 0,
-    opacity: 1,
-    duration: 0.9,
-    stagger: 0.15,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: gridRef.value,
-      start: "top 80%",
-    },
-  });
-});
 </script>
 
 <template>
@@ -91,56 +69,26 @@ onMounted(() => {
             </h2>
           </HomeComponentsTextReveal>
 
-          <p
-            v-if="isDesktop"
-            class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
-          >
-            <HomeComponentsTextReveal :delay="0.1">
-              Transparente Investition, keine Überraschungen.
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.15">
-              Jedes Projekt erhält die gleiche obsessive
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.2">
-              Hingabe zum Handwerk, der Umfang bestimmt
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.25">
-              den Preis.
-            </HomeComponentsTextReveal>
-          </p>
-          <p
-            v-else
-            class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
-          >
-            <HomeComponentsTextReveal :delay="0.1">
-              Transparente Investition, keine
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.15">
-              Überraschungen. Jedes Projekt
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.2">
-              erhält die gleiche obsessive
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.25">
-              Hingabe zum Handwerk, der
-            </HomeComponentsTextReveal>
-            <HomeComponentsTextReveal :delay="0.3">
-              Umfang bestimmt den Preis.
-            </HomeComponentsTextReveal>
-          </p>
+          <HomeComponentsTextRevealLines
+            text="Transparente Investition, keine Überraschungen. Jedes Projekt erhält die gleiche obsessive Hingabe zum Handwerk, der Umfang bestimmt den Preis."
+            class="text-neutral-100 text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.05]"
+            :base-delay="0.1"
+            :stagger="0.05"
+          />
         </div>
       </div>
 
       <!-- Pricing Grid -->
-      <div
-        ref="gridRef"
-        class="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4"
-      >
-        <article
-          v-for="tier in tiers"
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4">
+        <motion.article
+          v-for="(tier, i) in tiers"
           :key="tier.name"
           class="pricing-card group relative flex flex-col rounded-xl lg:rounded-2xl overflow-hidden"
           :class="tier.popular ? 'pricing-card--popular' : 'bg-neutral-800'"
+          :initial="{ y: 60, opacity: 0 }"
+          :while-in-view="{ y: 0, opacity: 1 }"
+          :in-view-options="{ once: true, margin: '0px 0px -20% 0px' }"
+          :transition="{ duration: 0.9, delay: i * 0.2, ease: [0.16, 1, 0.3, 1] }"
         >
           <!-- Popular badge -->
           <div
@@ -295,7 +243,7 @@ onMounted(() => {
               Jetzt anfragen
             </a>
           </div>
-        </article>
+        </motion.article>
       </div>
 
       <!-- Bottom note -->

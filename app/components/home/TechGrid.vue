@@ -50,7 +50,6 @@ const techItems = [
   },
 ];
 
-const isDesktop = useMediaQuery("(min-width: 1024px)");
 
 const gridRef = ref<HTMLElement>();
 const itemRefs = ref<Array<HTMLElement | null>>([]);
@@ -350,38 +349,12 @@ function onHoverAnimationComplete() {
             Technologien
           </h2>
         </HomeComponentsTextReveal>
-
-        <p
-          v-if="isDesktop"
-          class="text-[#1f2937] text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
-        >
-          <HomeComponentsTextReveal :delay="0.1">
-            Basierend auf skalierbaren Tools - gezielt
-          </HomeComponentsTextReveal>
-          <HomeComponentsTextReveal :delay="0.15">
-            gewählt für Präzision, Performance und kreativen
-          </HomeComponentsTextReveal>
-          <HomeComponentsTextReveal :delay="0.2">
-            Spielraum.
-          </HomeComponentsTextReveal>
-        </p>
-        <p
-          v-else
-          class="text-[#1f2937] text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.1] lg:leading-[1.05]"
-        >
-          <HomeComponentsTextReveal :delay="0.1">
-            Basierend auf skalierbaren Tools -
-          </HomeComponentsTextReveal>
-          <HomeComponentsTextReveal :delay="0.15">
-            gezielt gewählt für Präzision,
-          </HomeComponentsTextReveal>
-          <HomeComponentsTextReveal :delay="0.2">
-            Performance und kreativen
-          </HomeComponentsTextReveal>
-          <HomeComponentsTextReveal :delay="0.25">
-            Spielraum.
-          </HomeComponentsTextReveal>
-        </p>
+        <HomeComponentsTextRevealLines
+            text="Basierend auf skalierbaren Tools - gezielt gewählt für Präzision, Performance und kreativen Spielraum."
+            class="text-[#1f2937] text-[clamp(24px,3.3vw,56px)] font-medium leading-[1.05]"
+            :base-delay="0.1"
+            :stagger="0.05"
+          />
       </div>
     </div>
 

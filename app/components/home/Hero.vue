@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
   </section>
 
   <!-- Desktop Hero -->
-  <section class="hidden lg:block">
+  <section class="hidden lg:block text-[#404040]">
     <div
       class="flex flex-col uppercase font-semibold absolute bottom-[15vh] lg:bottom-[20vh] left-8 right-8"
     >
@@ -224,7 +224,7 @@ onBeforeUnmount(() => {
   </section>
 
   <!-- Video Preview Section -->
-  <section ref="introSection" class="hidden md:block intro h-svh px-8 relative">
+  <section ref="introSection" class="hidden md:block intro h-svh px-8 relative text-[#404040]">
     <motion.div
       class="video-preview relative w-full aspect-video overflow-hidden rounded-3xl will-change-transform cursor-pointer"
       style="clip-path: inset(0px); transform-origin: 50% 50%"
