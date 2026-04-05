@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref, type ComponentPublicInstance } from "vue";
+import { ref, reactive, type ComponentPublicInstance } from "vue";
 import { motion, useScroll, useTransform } from "motion-v";
 import { Ticker } from "motion-plus-vue";
 
 const MAX_PROJECTS = 24;
+const entryCompleted = reactive(new Set<number>());
+const dividerPromoting = ref(true);
 
 useSeoMeta({
   title: "Arbeiten – novafox",
@@ -28,7 +30,8 @@ const cardMotions = cardRefs.map((cardRef) => {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [-80, 80]);
-  return { y };
+  const visible = useVisibleWillChange(cardRef);
+  return { y, visible };
 });
 
 const setCardRef = (
@@ -81,10 +84,12 @@ const setCardRef = (
       <!-- Divider -->
       <motion.div
         class="mx-4 lg:mx-8 h-px bg-neutral-200"
+        :class="{ 'will-change-transform': dividerPromoting }"
         :initial="{ scaleX: 0, originX: 0 }"
         :while-in-view="{ scaleX: 1 }"
         :in-view-options="{ once: true }"
         :transition="{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }"
+        @animation-complete="dividerPromoting = false"
       />
 
       <!-- Project list -->
@@ -94,6 +99,7 @@ const setCardRef = (
           :key="project.num"
           :ref="(el) => setCardRef(index, el)"
           class="group border-b border-neutral-200 mx-4 lg:mx-8"
+          :class="{ 'will-change-[transform,opacity]': !entryCompleted.has(index) }"
           :initial="{ opacity: 0, y: 24 }"
           :while-in-view="{ opacity: 1, y: 0 }"
           :in-view-options="{ once: true }"
@@ -102,6 +108,7 @@ const setCardRef = (
             duration: 0.8,
             ease: [0.16, 1, 0.3, 1],
           }"
+          @animation-complete="entryCompleted.add(index)"
         >
           <a
             :href="project.url"
@@ -121,7 +128,8 @@ const setCardRef = (
               class="relative w-full lg:w-28 lg:h-18 h-52 rounded-lg lg:rounded-xl overflow-hidden shrink-0 lg:mr-8"
             >
               <motion.div
-                class="absolute inset-0 w-full h-[150%] -top-[25%] transform-gpu will-change-transform"
+                class="absolute inset-0 w-full h-[150%] -top-[25%] transform-gpu"
+                :class="{ 'will-change-transform': cardMotions[index]!.visible }"
                 style="contain: paint"
                 :style="{ y: cardMotions[index]!.y }"
               >

@@ -14,6 +14,9 @@ const viewportHeight = useMotionValue(900);
 const viewportWidth = useMotionValue(1440);
 
 const introSection = ref<HTMLElement | null>(null);
+const videoPreviewVisible = useVisibleWillChange(introSection);
+const videoWrapperPromoting = ref(true);
+const gifPromoting = ref(true);
 
 const { scrollYProgress } = useScroll({
   target: introSection,
@@ -149,6 +152,7 @@ onBeforeUnmount(() => {
           alt=""
           fetchpriority="high"
           class="hero_footer-img"
+          :class="{ 'will-change-[transform,opacity]': gifPromoting }"
           :style="{ opacity: gifOpacity }"
           :initial="{ opacity: 0, y: 12 }"
           :while-in-view="{ y: 0, opacity: 1 }"
@@ -157,6 +161,7 @@ onBeforeUnmount(() => {
             delay: 0.55,
             ease: [0.16, 1, 0.3, 1],
           }"
+          @animation-complete="gifPromoting = false"
         />
 
         <HomeComponentsTextReveal :delay="0.5" :duration="1">
@@ -254,6 +259,7 @@ onBeforeUnmount(() => {
         alt=""
         fetchpriority="high"
         class="hero_footer-img"
+        :class="{ 'will-change-[transform,opacity]': gifPromoting }"
         :style="{ opacity: gifOpacity }"
         :initial="{ opacity: 0, y: 20 }"
         :while-in-view="{ y: 0, opacity: 1 }"
@@ -262,6 +268,7 @@ onBeforeUnmount(() => {
           delay: 0.7,
           ease: [0.16, 1, 0.3, 1],
         }"
+        @animation-complete="gifPromoting = false"
       />
       <HomeComponentsTextReveal :delay="0.5" :duration="1">
         <div class="flex items-center gap-1">
@@ -290,7 +297,8 @@ onBeforeUnmount(() => {
   <!-- Video Preview Section -->
   <section ref="introSection" class="hidden md:block intro h-svh px-8 relative text-[#404040]">
     <motion.div
-      class="video-preview relative w-full aspect-video overflow-hidden rounded-3xl will-change-transform cursor-pointer"
+      class="video-preview relative w-full aspect-video overflow-hidden rounded-3xl cursor-pointer"
+      :class="{ 'will-change-transform': videoPreviewVisible }"
       style="clip-path: inset(0px); transform-origin: 50% 50%"
       :style="{
         x: videoX,
@@ -300,6 +308,7 @@ onBeforeUnmount(() => {
     >
       <motion.div
         class="video-wrapper absolute top-0 left-0 w-full h-full overflow-hidden rounded-2xl"
+        :class="{ 'will-change-transform': videoWrapperPromoting }"
         :initial="{ y: '-100%' }"
         :while-in-view="{ y: 0 }"
         :in-view-options="{ once: true, margin: '0px 0px -80px 0px' }"
@@ -308,6 +317,7 @@ onBeforeUnmount(() => {
           delay: 0.5,
           ease: [0.16, 1, 0.3, 1],
         }"
+        @animation-complete="videoWrapperPromoting = false"
       >
         <div
           class="absolute top-0 left-0 w-full h-full rounded-2xl pointer-events-none bg-amber-200"

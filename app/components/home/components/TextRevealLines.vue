@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, reactive, onMounted, onBeforeUnmount } from "vue";
 import { splitText } from "motion-plus-vue";
 import { motion } from "motion-v";
 
@@ -25,6 +25,7 @@ const initialY = props.reverse ? "-100%" : "100%";
 
 const measurer = ref<HTMLElement | null>(null);
 const lines = ref<string[]>([]);
+const completedLines = reactive(new Set<number>());
 
 function split() {
   const el = measurer.value;
@@ -63,6 +64,7 @@ onBeforeUnmount(() => {
     <span v-for="(line, i) in lines" :key="i" class="block overflow-hidden py-[0.08em] -my-[0.08em]">
       <motion.span
         class="block"
+        :class="{ 'will-change-transform': !completedLines.has(i) }"
         :initial="{ y: initialY }"
         :while-in-view="{ y: '0%' }"
         :in-view-options="{ once: true }"
@@ -71,6 +73,7 @@ onBeforeUnmount(() => {
           delay: baseDelay + i * stagger,
           ease: [0.16, 1, 0.3, 1],
         }"
+        @animation-complete="completedLines.add(i)"
       >
         {{ line }}
       </motion.span>

@@ -2,8 +2,11 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { gsap } from 'gsap'
 
+const rootRef = ref<HTMLElement>()
 const trackRef = ref<HTMLElement>()
+const isVisible = ref(false)
 let tween: gsap.core.Tween | null = null
+let observer: IntersectionObserver | null = null
 
 const baseItems = [
   'Web Design', '·', 'Development', '·', 'Branding', '·',
@@ -28,16 +31,33 @@ onMounted(() => {
       x: gsap.utils.unitize((x: string) => parseFloat(x) % setWidth),
     },
   })
+
+  // Pause when off-screen to save CPU/GPU
+  if (rootRef.value) {
+    observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible.value = entry!.isIntersecting
+        if (entry!.isIntersecting) {
+          tween?.resume()
+        } else {
+          tween?.pause()
+        }
+      },
+      { threshold: 0 },
+    )
+    observer.observe(rootRef.value)
+  }
 })
 
 onBeforeUnmount(() => {
   tween?.kill()
+  observer?.disconnect()
 })
 </script>
 
 <template>
-  <div class="marquee-root">
-    <div ref="trackRef" class="marquee-inner">
+  <div ref="rootRef" class="marquee-root">
+    <div ref="trackRef" class="marquee-inner" :class="{ 'will-change-transform': isVisible }">
       <div v-for="copy in 3" :key="copy" class="marquee-set">
         <span v-for="(item, i) in baseItems" :key="i" class="marquee-item" :class="{ 'marquee-item--dot': item === '·' }">{{ item }}</span>
       </div>
@@ -58,7 +78,6 @@ onBeforeUnmount(() => {
   display: flex;
   white-space: nowrap;
   width: max-content;
-  will-change: transform;
 }
 
 .marquee-set {

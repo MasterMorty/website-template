@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { reactive } from "vue";
 import { motion } from "motion-v";
+
+const pricingCompleted = reactive(new Set<number>());
 
 
 const tiers = [
@@ -84,11 +87,12 @@ const tiers = [
           v-for="(tier, i) in tiers"
           :key="tier.name"
           class="pricing-card group relative flex flex-col rounded-xl lg:rounded-2xl overflow-hidden"
-          :class="tier.popular ? 'pricing-card--popular' : 'bg-neutral-800'"
+          :class="[tier.popular ? 'pricing-card--popular' : 'bg-neutral-800', { 'will-change-[transform,opacity]': !pricingCompleted.has(i) }]"
           :initial="{ y: 60, opacity: 0 }"
           :while-in-view="{ y: 0, opacity: 1 }"
           :in-view-options="{ once: true, margin: '0px 0px -20% 0px' }"
           :transition="{ duration: 0.9, delay: i * 0.2, ease: [0.16, 1, 0.3, 1] }"
+          @animation-complete="pricingCompleted.add(i)"
         >
           <!-- Popular badge -->
           <div

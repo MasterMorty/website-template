@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, type ComponentPublicInstance } from "vue";
+import { ref, reactive, type ComponentPublicInstance } from "vue";
 import { motion, useScroll, useTransform } from "motion-v";
 import { Ticker } from "motion-plus-vue";
 
 const MAX_PROJECTS = 10;
+const entryCompleted = reactive(new Set<number>());
 
 const { data: projects } = await useAsyncData("home-projects", () =>
   queryCollection("projects")
@@ -25,7 +26,8 @@ const cardMotions = cardRefs.map((cardRef) => {
     offset: ["start end", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], [-80, 80]);
-  return { y };
+  const visible = useVisibleWillChange(cardRef);
+  return { y, visible };
 });
 
 const setCardRef = (
@@ -63,6 +65,7 @@ const setCardRef = (
         :key="project.num"
         :ref="(el) => setCardRef(index, el)"
         class="w-full lg:w-1/2 group"
+        :class="{ 'will-change-[transform,opacity]': !entryCompleted.has(index) }"
         :initial="{ y: 40, opacity: 0, scale: 0.95 }"
         :while-in-view="{ y: 0, opacity: 1, scale: 1 }"
         :in-view-options="{ once: true }"
@@ -71,6 +74,7 @@ const setCardRef = (
           duration: 1.2,
           ease: [0.16, 1, 0.3, 1],
         }"
+        @animation-complete="entryCompleted.add(index)"
       >
         <a
           class="flex flex-col gap-4 lg:gap-5 px-3 lg:px-4 pt-3 lg:pt-4 pb-5 lg:pb-6 rounded-xl lg:rounded-2xl bg-neutral-900 cursor-pointer relative"
@@ -88,7 +92,8 @@ const setCardRef = (
             />
             <div class="w-full h-full">
               <motion.div
-                class="absolute inset-0 w-full h-[150%] -top-[25%] lg:-top-[30%] transform-gpu will-change-transform"
+                class="absolute inset-0 w-full h-[150%] -top-[25%] lg:-top-[30%] transform-gpu"
+                :class="{ 'will-change-transform': cardMotions[index]!.visible }"
                 style="contain: paint"
                 :style="{ y: cardMotions[index]!.y }"
               >
@@ -98,7 +103,7 @@ const setCardRef = (
                   loading="lazy"
                   decoding="async"
                   class="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-500 ease-in-out"
-                />
+                >
               </motion.div>
             </div>
           </div>
@@ -114,7 +119,7 @@ const setCardRef = (
                   height="32"
                   decoding="async"
                   class="w-6 h-6 lg:w-8 lg:h-8 rounded-full object-contain"
-                />
+                >
                 <p
                   class="text-[clamp(14px,1.2vw,18px)] uppercase font-semibold text-neutral-100 tracking-wide"
                 >
