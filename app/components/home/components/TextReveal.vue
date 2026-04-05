@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { motion } from "motion-v";
 
 const props = withDefaults(
@@ -19,11 +19,35 @@ const props = withDefaults(
 
 const initialY = props.reverse ? "-100%" : "100%";
 const promoting = ref(true);
+
+const inlineWrapperTags = new Set([
+  "a",
+  "abbr",
+  "b",
+  "cite",
+  "em",
+  "i",
+  "label",
+  "mark",
+  "p",
+  "q",
+  "small",
+  "span",
+  "strong",
+  "time",
+  "u",
+]);
+
+const motionTag = computed(() => {
+  const tag = props.tag.toLowerCase();
+  return inlineWrapperTags.has(tag) ? motion.span : motion.div;
+});
 </script>
 
 <template>
   <component :is="tag" class="text-reveal-mask">
-    <motion.div
+    <component
+      :is="motionTag"
       :class="{ 'will-change-transform': promoting }"
       :initial="{ y: initialY }"
       :while-in-view="{ y: 0 }"
@@ -36,7 +60,7 @@ const promoting = ref(true);
       @animation-complete="promoting = false"
     >
       <slot />
-    </motion.div>
+    </component>
   </component>
 </template>
 

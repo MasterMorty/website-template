@@ -357,7 +357,7 @@ const footerTextDelay = footerStartDelay + 0.16;
     </div>
 
     <!-- Mobile menu dialog -->
-    <Teleport to="header">
+    <Teleport to="body">
       <div v-if="mobileMenuOpen" class="fixed inset-0 z-90 text-[#404040]">
         <div
           class="fixed items-center justify-between text-[#404040] left-4 lg:left-8 right-4 lg:right-8 top-4.5 lg:top-6 flex gap-4 lg:gap-8 z-50"

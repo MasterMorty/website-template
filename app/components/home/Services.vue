@@ -63,7 +63,7 @@
                 :stagger="0.04"
               />
 
-              <p
+              <div
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
               >
                 <HomeComponentsTextReveal>
@@ -90,7 +90,7 @@
                     </li>
                   </ul>
                 </HomeComponentsTextReveal>
-              </p>
+              </div>
             </div>
 
             <div class="lg:col-span-3">
@@ -138,7 +138,7 @@
                 :base-delay="0.1"
                 :stagger="0.04"
               />
-              <p
+              <div
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
               >
                 <HomeComponentsTextReveal>
@@ -165,7 +165,7 @@
                     </li>
                   </ul>
                 </HomeComponentsTextReveal>
-              </p>
+              </div>
             </div>
 
             <div class="lg:col-span-3">
@@ -214,7 +214,7 @@
                 :stagger="0.04"
               />
 
-              <p
+              <div
                 class="text-[clamp(16px,1.2vw,20px)] text-neutral-100 font-medium leading-[1.3]"
               >
                 <HomeComponentsTextReveal>
@@ -244,7 +244,7 @@
                     </li>
                   </ul>
                 </HomeComponentsTextReveal>
-              </p>
+              </div>
             </div>
 
             <div class="lg:col-span-3">
