@@ -79,7 +79,7 @@ onBeforeUnmount(() => {
       <div class="flex flex-col gap-1">
         <div class="overflow-hidden mb-1 w-full relative">
           <HomeComponentsTextReveal :duration="1">
-            <div class="flex justify-between w-full">
+            <div class="flex justify-between w-full text-[#404040]">
               <p class="text-[clamp(14px,1.2vw,20px)] uppercase font-semibold">
                 Your
               </p>
